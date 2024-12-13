@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="pastel">
+<html lang="en" data-theme="forest">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     @vite('resources/css/app.css') <!-- Include Tailwind CSS or other styles -->
 </head>
 
-<div class="h-full px-4 py-4 overflow-y-auto space-x-4  bg-primary fixed">
+<div class="h-full px-4 py-4 overflow-y-auto space-x-4 fixed">
     <div class=" flex place-content-center py-10 px-5">
         <a href="{{ url('/') }}">
             <img class="h-24 object-scale-down place-content-center" src="{{ asset('img/search-analysis.png') }}">

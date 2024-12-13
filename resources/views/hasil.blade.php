@@ -3,8 +3,6 @@
 <?php
 use Illuminate\Support\Facades\DB;
 
-// session_start();
-// ob_start();
 
 $selectdb = new mysqli("localhost", "myuser", "mypassword", "hp");
 $query = mysqli_query($selectdb, "SELECT * FROM data_hp");

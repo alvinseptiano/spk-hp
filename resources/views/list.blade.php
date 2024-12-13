@@ -11,7 +11,7 @@
     <div class="divider"></div>
     <div class="flex-col container-lg py-8">
         <div class="relative overflow-x-auto shadow px-5">
-            <h4 class="text-3xl font-bold tracking-tight text-center text-black">
+            <h4 class="text-3xl font-bold tracking-tight text-center">
                 Daftar Smartphone
             </h4>
             <table class="table">
@@ -102,7 +102,7 @@
         <br>
 
         <div class="relative overflow-x-auto shadow px-5">
-            <h4 class="text-3xl font-bold tracking-tight text-center text-black">
+            <h4 class="text-3xl font-bold tracking-tight text-center">
                 Analisa Smartphone
             </h4>
             <table class="table">
