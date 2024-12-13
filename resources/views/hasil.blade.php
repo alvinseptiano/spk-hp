@@ -96,7 +96,7 @@ function rank_array($array)
 
 <div class="flex-col container-lg py-8">
     <div class="relative overflow-x-auto shadow px-5">
-        <h4 class="text-3xl font-bold tracking-tight text-center text-black">
+        <h4 class="text-3xl font-bold tracking-tight text-center">
             Daftar Smartphone
         </h4>
         <table class="table">
@@ -176,7 +176,7 @@ foreach ($phones as $phone) {
     <br>
 
     <div class="relative overflow-x-auto shadow px-5">
-        <h4 class="text-3xl font-bold tracking-tight text-center text-black">
+        <h4 class="text-3xl font-bold tracking-tight text-center">
             Input
         </h4>
         <table class="w-full text-sm text-left rtl:text-right text-black-500">
@@ -236,7 +236,7 @@ foreach ($phones as $phone) {
     <br>
 
     <div class="relative overflow-x-auto shadow px-5">
-        <h4 class="text-3xl font-bold tracking-tight text-center text-black">
+        <h4 class="text-3xl font-bold tracking-tight text-center">
             Kriteria (Weight)
         </h4>
         <table class="table">
@@ -309,7 +309,7 @@ foreach ($phones as $phone) {
     <br>
 
     <div class="relative overflow-x-auto shadow px-5">
-        <h4 class="text-3xl font-bold tracking-tight text-center text-black">
+        <h4 class="text-3xl font-bold tracking-tight text-center">
            Cost & Benefit 
         </h4>
         <table class="table">
@@ -426,7 +426,7 @@ foreach ($phones as $data) {
     <br>
 
     <div class="relative overflow-x-auto shadow px-5">
-        <h4 class="text-3xl font-bold tracking-tight text-center text-black">
+        <h4 class="text-3xl font-bold tracking-tight text-center">
            Normalisasi Matriks 
         </h4>
         <table class="table">
@@ -545,7 +545,7 @@ foreach ($phones as $data) {
     <br>
 
     <div class="relative overflow-x-auto shadow px-5">
-        <h4 class="text-3xl font-bold tracking-tight text-center text-black">Hasil
+        <h4 class="text-3xl font-bold tracking-tight text-center">Hasil
         </h4>
         <table class="table">
             <thead style="border-top: 1px solid #d0d0d0;">
@@ -610,7 +610,7 @@ $best_phone = get_best_phone($data_rows, $weights);
 ?>
     <br>
     <div class="relative overflow-x-auto shadow px-5">
-        <h4 class="text-3xl font-bold tracking-tight text-center text-black">Hasil
+        <h4 class="text-3xl font-bold tracking-tight text-center">Hasil
 
             <?php
 
