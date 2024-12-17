@@ -13,7 +13,7 @@
         <div class="grid grid-cols-2 gap-6">
             <div class="p-y-2 col-span-1">
                 <label for="" class="label">Harga</label>
-                <select name="harga" class="select select-primary w-full">
+                <select name="harga" class="select select-primary w-full" required="">
                     <option value="" disabled selected>Kriteria Harga</option>
                     <option value="5">Rp. 500.000 - 1.000.000</option>
                     <option value="4">Rp. 1.000.000 - 1.500.000</option>
@@ -24,7 +24,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label for="" class="label">Jenis Prosesor</label>
-                <select name="prosesor" class="select select-bordered w-full">
+                <select name="prosesor" class="select select-bordered w-full" required="">
                     <option value="" disabled selected>Kriteria Prosesor</option>
                     <option value="1"> DualCore </option>
                     <option value="2"> QuadCore </option>
@@ -35,7 +35,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label for="" class="label">Memori Internal</label>
-                <select name="memori" class="select select-bordered w-full">
+                <select name="memori" class="select select-bordered w-full" required="">
                     <option value="" disabled selected>Kriteria Internal</option>
                     <option value="1">8 GB</option>
                     <option value="2">16 GB</option>
@@ -47,7 +47,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label for="" class="label">RAM</label>
-                <select name="ram" class="select select-bordered w-full">
+                <select name="ram" class="select select-bordered w-full" required="">
                     <option value="" disabled selected>Kriteria RAM</option>
                     <option value="1">2 GB</option>
                     <option value="2">3 GB</option>
@@ -58,7 +58,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label for="" class="label">Resolusi</label>
-                <select name="resolusi" class="select select-bordered w-full">
+                <select name="resolusi" class="select select-bordered w-full" required="">
                     <option value="" disabled selected>Kriteria Resolusi</option>
                     <option value="1"> HD </option>
                     <option value="2"> HD+ </option>
@@ -69,7 +69,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label for="" class="label">Kamera</label>
-                <select name="kamera" class="select select-bordered w-full">
+                <select name="kamera" class="select select-bordered w-full" required="">
                     <option value="" disabled selected>Kriteria Kamera</option>
                     <option value="1">8 MP</option>
                     <option value="2">13 MP</option>
@@ -80,7 +80,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label for="" class="label">Baterai</label>
-                <select name="baterai" class="select select-bordered w-full">
+                <select name="baterai" class="select select-bordered w-full" required="">
                     <option value="" disabled selected>Kriteria Baterai</option>
                     <option value="1">1000 - 2000 mAh</option>
                     <option value="2">2000 - 3000 mAh</option>
