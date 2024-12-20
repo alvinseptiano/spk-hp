@@ -9,12 +9,13 @@ class SmartphoneController extends Controller
 
     public function view(Request $request) {
         $smartphones = Smartphone::all();
-        return view('daftar', compact('smartphones'));
+        $routeName = $request->route()->getName();
+        return view($routeName, ['phones' => $smartphones]);
     }
     public function store(Request $request)
     {
         // Validation
-        $validatedData = $request->validate([
+        $request->validate([
             'nama' => 'required|string',
             'harga' => 'required|integer',
             'prosesor' => 'required|string',
@@ -46,9 +47,10 @@ class SmartphoneController extends Controller
         $harga_n = match (true) {
             $harga >= 500_000 && $harga <= 1_000_000 => 5,
             $harga >= 1_000_001 && $harga <= 1_500_000 => 4,
-            $harga >= 1_500.001 && $harga <= 2_000_000 => 3,
-            $harga >= 2_000.001 && $harga <= 2_500_000 => 2,
-            $harga >= 2_500.001 && $harga <= 3_000_000 => 1,
+            $harga >= 1_500_001 && $harga <= 2_000_000 => 3,
+            $harga >= 2_000_001 && $harga <= 2_500_000 => 2,
+            $harga >= 2_500_001 && $harga <= 3_000_000 => 1,
+            $harga < 500_000 || $harga > 3_000_000 => -1,
             default => -1,
         };
 
@@ -106,24 +108,24 @@ class SmartphoneController extends Controller
             default => -1,
         };
 
-        // Store in the database, passing the normalized values directly
         Smartphone::create([
-            'nama' => $request->input('nama'),
-            'harga' => $harga,
-            'prosesor' => $prosesor,
-            'memori' => $memori,
-            'ram' => $ram,
-            'kamera' => $kamera,
-            'resolusi' => $resolusi,
-            'baterai' => $baterai,
-            'harga_n' => $harga_n,
+            'nama'       => $request->input('nama'),
+            'harga'      => $harga,
+            'prosesor'   => $prosesor,
+            'memori'     => $memori,
+            'ram'        => $ram,
+            'kamera'     => $kamera,
+            'resolusi'   => $resolusi,
+            'baterai'    => $baterai,
+            'harga_n'    => $harga_n,
             'prosesor_n' => $prosesor_n,
-            'kamera_n' => $kamera_n,
-            'ram_n' => $ram_n,
-            'baterai_n' => $baterai_n,
+            'kamera_n'   => $kamera_n,
+            'ram_n'      => $ram_n,
+            'baterai_n'  => $baterai_n,
             'resolusi_n' => $resolusi_n,
-            'memori_n' => $memori_n,
+            'memori_n'   => $memori_n,
         ]);
+
         return redirect()->back()->with('success', 'Smartphone berhasil ditambahkan!');
     }
 

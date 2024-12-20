@@ -24,7 +24,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label class="label">Prosesor</label>
-                <select id="category" name="prosesor" class="select select-primary w-full">
+                <select id="category" name="prosesor" class="select select-bordered w-full">
                     <option value="" disabled selected>Kriteria Prosesor</option>
                     <option value="DualCore">DualCore</option>
                     <option value="QuadCore">QuadCore</option>
@@ -35,7 +35,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label class="label">Kamera</label>
-                <select id="category" name="kamera" class="select select-primary w-full">
+                <select id="category" name="kamera" class="select select-bordered w-full">
                     <option value="" disabled selected>Kriteria Kamera</option>
                     <option value="8">8 MP</option>
                     <option value="13">13 MP</option>
@@ -47,7 +47,7 @@
             <div class="p-y-2 col-span-1">
                 <label class="label">
                     RAM</label>
-                <select id="category" name="ram" class="select select-primary w-full">
+                <select id="category" name="ram" class="select select-bordered w-full">
                     <option value="" disabled selected>Kriteria RAM</option>
                     <option value="2">2 GB</option>
                     <option value="3">3 GB</option>
@@ -58,7 +58,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label class="label">Baterai</label>
-                <select id="category" name="baterai" class="select select-primary w-full">
+                <select id="category" name="baterai" class="select select-bordered w-full">
                     <option value="" disabled selected>Kriteria Baterai</option>
                     <option value="1000 - 2000">1000 - 2000 mAh</option>
                     <option value="2000 - 3000">2000 - 3000 mAh</option>
@@ -69,7 +69,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label class="label">Resolusi</label>
-                <select id="category" name="resolusi" class="select select-primary w-full">
+                <select id="category" name="resolusi" class="select select-bordered w-full">
                     <option value="" disabled selected>Kriteria Resolusi</option>
                     <option value="HD">HD</option>
                     <option value="HD+">HD+</option>
@@ -80,7 +80,7 @@
             </div>
             <div class="p-y-2 col-span-1">
                 <label class="label">Internal</label>
-                <select id="category" name="memori" class="select select-primary w-full">
+                <select id="category" name="memori" class="select select-bordered w-full">
                     <option value="" disabled selected>Kriteria Internal</option>
                     <option value="8">8 GB</option>
                     <option value="16">16 GB</option>
@@ -89,11 +89,11 @@
                     <option value="128">128 GB</option>
                 </select>
             </div>
-        </div>
 
-        <button type="submit" name="tambah_hp" class="btn btn-primary col-span-2 text-center">
-            Tambah
-        </button>
+            <button type="submit" class="mt-4 btn btn-primary col-span-2 text-center">
+                Tambah
+            </button>
+        </div>
     </form>
 </div>
 

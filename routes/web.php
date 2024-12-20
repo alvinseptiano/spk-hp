@@ -3,10 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\SmartphoneController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\HasilController;
 
 Route::get('/', function () {
     return view('home');
@@ -28,13 +28,7 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/hasil', function () {
-    return view('hasil');
-})->name('hasil');
-
-Route::get('/list', function () {
-    return view('list');
-})->name('list');
+Route::get('/list', [SmartphoneController::class, 'view'])->middleware(['auth', 'verified'])->name('list');
 
 Route::get('/register', function () {
     return view('register');
@@ -47,20 +41,19 @@ Route::post('/daftar', [SmartphoneController::class, 'store'])->name('smartphone
 Route::post('/list{id}', [SmartphoneController::class, 'destroy'])->name('smartphones.destroy');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'createUser']);
-Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::post('/login', [LoginController::class, 'actionlogin'])->name('actionlogin');
 Route::get('register', [RegisterController::class, 'register'])->name('register');
 Route::post('register/action', [RegisterController::class, 'actionregister'])->name('actionregister');
-
+Route::post('/hasil', [HasilController::class, 'view'])->name('hasil');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/hasil', function () {
-    return view('pages.hasil');
-})->name('hasil');
+// Route::post('/hasil', function () {
+//     return view('pages.hasil');
+// })->name('hasil');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @section('content')
 @auth
-    <?php    $phones = DB::select("SELECT * FROM data_hp"); ?>
-
     <header>
         <div class="mt-10">
             <h1 class="text-3xl font-bold tracking-tight text-center">Rekomendasi Smartphone</h1>
@@ -50,37 +48,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-        $no = 1;
-        foreach ($phones as $phone) {
-                                                                            ?>
+        @foreach ($phones as $phone) 
                     <tr>
                         <td>
-                            <center><?php        echo $no; ?></center>
+                            <center>{{ $loop->iteration }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->nama ?></center>
+                            <center>{{ $phone->nama }}</center>
                         </td>
                         <td>
-                            <center><?php        echo "Rp. ", $phone->harga ?></center>
+                            <center>{{ $phone->harga }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->prosesor ?></center>
+                            <center>{{ $phone->prosesor }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->kamera, " MP" ?></center>
+                            <center>{{ $phone->kamera }} MP</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->ram, " GB" ?></center>
+                            <center>{{ $phone->ram }} BG</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->baterai, " mAh" ?></center>
+                            <center>{{ $phone->baterai }} mAH</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->resolusi ?></center>
+                            <center>{{ $phone->resolusi }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->memori, " GB" ?></center>
+                            <center>{{ $phone->memori }} GB</center>
                         </td>
                         <td>
                             <center>
@@ -92,10 +87,7 @@
                             </center>
                         </td>
                     </tr>
-                    <?php
-            $no++;
-        }
-                                                                        ?>
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -135,40 +127,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-        $no = 1;
-        foreach ($phones as $phone) {
-                                                                            ?>
+                    
+        @foreach ($phones as $phone)
                     <tr>
                         <td>
-                            <center><?php        echo "A", $no ?></center>
+                            <center>A{{ $loop->iteration }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->harga_n?></center>
+                            <center>{{  $phone->harga_n }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->prosesor_n ?></center>
+                            <center>{{  $phone->prosesor_n }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->kamera_n ?></center>
+                            <center>{{  $phone->kamera_n }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->ram_n ?></center>
+                            <center>{{  $phone->ram_n }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->baterai_n ?></center>
+                            <center>{{  $phone->baterai_n }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->resolusi_n ?></center>
+                            <center>{{  $phone->resolusi_n }}</center>
                         </td>
                         <td>
-                            <center><?php        echo $phone->memori_n ?></center>
+                            <center>{{  $phone->memori_n }}</center>
                         </td>
                     </tr>
-                    <?php
-            $no++;
-        }
-                                                                        ?>
+                @endforeach
                 </tbody>
             </table>
         </div>

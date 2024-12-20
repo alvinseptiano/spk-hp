@@ -13,7 +13,7 @@
         <div class="grid grid-cols-2 gap-6">
             <div class="p-y-2 col-span-1">
                 <label for="" class="label">Harga</label>
-                <select name="harga" class="select select-primary w-full" required="">
+                <select name="harga" class="select select-bordered w-full" required="">
                     <option value="" disabled selected>Kriteria Harga</option>
                     <option value="5">Rp. 500.000 - 1.000.000</option>
                     <option value="4">Rp. 1.000.000 - 1.500.000</option>
@@ -89,7 +89,7 @@
                     <option value="5">5000 - 6000 mAh</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary col-span-2 text-center">
+            <button type="submit" class="mt-4 btn btn-primary col-span-2 text-center">
                 Rekomendasikan
             </button>
         </div>
