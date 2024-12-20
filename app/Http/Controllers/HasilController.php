@@ -40,22 +40,75 @@ function calculateDistance($a, $b)
         pow($a['resolution'] - $b['resolution'], 2)
     );
 }
+
 function get_best_phone($alternatives, $criteria)
 {
-    $closestAlternative = null;
-    $minDistance = PHP_INT_MAX;
-    $no = 0;
+    // Validate inputs
+    if (empty($alternatives) || empty($criteria)) {
+        return null;
+    }
 
+    // Initialize variables
+    $bestPhones = [];
+    $minDistance = PHP_INT_MAX;
+
+    // Normalize weights if provided in criteria
+    $totalWeight = array_sum(array_map(function ($criterion) {
+        return $criterion['weight'] ?? 1;
+    }, $criteria));
+
+    // Calculate weighted distances for each alternative
     foreach ($alternatives as $alternative) {
-        $distance = calculateDistance($alternative, $criteria);
+        $distance = calculateWeightedDistance($alternative, $criteria, $totalWeight);
+
+        // Store phones with equal scores to handle ties
         if ($distance < $minDistance) {
             $minDistance = $distance;
-            $closestAlternative = $alternative['name'];
+            $bestPhones = [$alternative];
+        } elseif ($distance == $minDistance) {
+            $bestPhones[] = $alternative;
         }
     }
-    $no += 1;
 
-    return $closestAlternative;
+    // Return results
+    if (count($bestPhones) == 1) {
+        return $bestPhones[0]['name'];
+    } else {
+        // Return array of best phones in case of tie
+        return array_map(function ($phone) {
+            return $phone['name'];
+        }, $bestPhones);
+    }
+}
+
+function calculateWeightedDistance($alternative, $criteria, $totalWeight)
+{
+    $distance = 0;
+
+    foreach ($criteria as $criterion => $details) {
+        // Skip if criterion doesn't exist in alternative
+        if (!isset($alternative[$criterion])) {
+            continue;
+        }
+
+        $weight = $details['weight'] ?? 1;
+        $normalizedWeight = $weight / $totalWeight;
+
+        // Handle different types of criteria
+        switch ($details['type'] ?? 'numeric') {
+            case 'numeric':
+                $distance += $normalizedWeight * pow($alternative[$criterion] - $details['value'], 2);
+                break;
+            case 'boolean':
+                $distance += $normalizedWeight * ($alternative[$criterion] !== $details['value'] ? 1 : 0);
+                break;
+            case 'categorical':
+                $distance += $normalizedWeight * (!in_array($alternative[$criterion], (array) $details['value']) ? 1 : 0);
+                break;
+        }
+    }
+
+    return sqrt($distance);
 }
 
 function get_row($data, $columns, $row_index)
