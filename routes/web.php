@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RekomendasiController;
@@ -42,7 +43,6 @@ Route::get('/register', function () {
 Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::post('/submit', [RekomendasiController::class, 'handleSubmit'])->name('form.submit'); 
 Route::post('/daftar', [SmartphoneController::class, 'store'])->name('smartphones.store');
 Route::post('/list{id}', [SmartphoneController::class, 'destroy'])->name('smartphones.destroy');
 Route::post('/login', [LoginController::class, 'login']);
@@ -52,3 +52,20 @@ Route::get('home', [HomeController::class, 'index'])->name('home')->middleware('
 Route::post('/login', [LoginController::class, 'actionlogin'])->name('actionlogin');
 Route::get('register', [RegisterController::class, 'register'])->name('register');
 Route::post('register/action', [RegisterController::class, 'actionregister'])->name('actionregister');
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::post('/hasil', function () {
+    return view('pages.hasil');
+})->middleware(['auth', 'verified'])->name('hasil');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

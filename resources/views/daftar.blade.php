@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
+<x-toast />
 <header>
     <div class="mt-10">
         <h1 class="text-3xl font-bold tracking-tight text-center">Tambah Smartphone</h1>
@@ -8,16 +8,19 @@
 </header>
 
 <div class="shadow px-5 mb-10">
+
     <form class="p-10" method="POST" action="{{ route('smartphones.store') }}">
         @csrf
         <div class="form-control grid gap-6 grid-cols-2 mb-10">
             <div class="p-y-2 col-span-1">
                 <label for="name" class="label">Nama</label>
-                <input type="text" name="nama" id="name" class="input input-bordered w-full" placeholder="Masukan nama produk" required="">
+                <input type="text" name="nama" id="name" class="input input-bordered w-full"
+                    placeholder="Masukan nama produk" required="">
             </div>
             <div class="p-y-2 col-span-1">
                 <label for="harga" class="label">Harga</label>
-                <input type="number" name="harga" id="harga" class="input input-bordered w-full" placeholder="Rp." required="">
+                <input type="number" name="harga" id="harga" class="input input-bordered w-full" placeholder="Rp."
+                    required="">
             </div>
             <div class="p-y-2 col-span-1">
                 <label class="label">Prosesor</label>
@@ -88,69 +91,11 @@
             </div>
         </div>
 
-        <button type="submit" name="tambah_hp"
-            class="btn btn-primary col-span-2 text-center">
+        <button type="submit" name="tambah_hp" class="btn btn-primary col-span-2 text-center">
             Tambah
         </button>
-
-        @if (session('success'))
-            <div class="alert alert-success text-white">
-                {{ session('success') }}
-            </div>
-        @endif
     </form>
 </div>
-
-<div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-900 bg-opacity-50">
-    <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm">
-        <h2 class="text-lg font-semibold ">Success!</h2>
-        <p class="mt-2 text-gray-600">{{ session('success') }}</p>
-        <button id="closeModal" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg">Close</button>
-    </div>
-</div>
-
-<script>
-    document.getElementById('openModal').addEventListener('click', function () {
-        document.getElementById('crud-modal').classList.remove('hidden');
-    });
-
-    document.getElementById('closeModal').addEventListener('click', function () {
-        document.getElementById('crud-modal').classList.add('hidden');
-    });
-    // Close modal when clicking outside the modal content
-    document.getElementById('myModal').addEventListener('click', function (event) {
-        const modalContent = document.getElementById('crud-modal');
-        if (!modalContent.contains(event.target)) {
-            document.getElementById('crud-modal').classList.add('hidden');
-        }
-    });
-    // Close modal if clicking outside the modal content
-    document.getElementById('crud-modal').addEventListener('click', function (event) {
-        if (event.target === this) {
-            document.getElementById('crud-modal').classList.add('hidden');
-        }
-    });
-    document.addEventListener('DOMContentLoaded', function () {
-        @if (session('success'))
-            const modal = document.getElementById('successModal');
-            modal.classList.remove('hidden');
-
-            const closeModal = document.getElementById('closeModal');
-            closeModal.addEventListener('click', function () {
-                modal.classList.add('hidden');
-            });
-        @endif
-    });
-</script>
-<!-- @if(session('success'))
-    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-900 bg-opacity-50">
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm">
-            <h2 class="text-lg font-semibold ">Success!</h2>
-            <p class="mt-2 text-gray-600">{{ session('success') }}</p>
-            <button id="closeModal" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg">Close</button>
-        </div>
-    </div>
-@endif -->
 
 </section>
 @endsection

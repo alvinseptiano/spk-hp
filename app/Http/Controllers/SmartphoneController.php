@@ -6,6 +6,11 @@ use App\Models\Smartphone;
 
 class SmartphoneController extends Controller
 {
+
+    public function view(Request $request) {
+        $smartphones = Smartphone::all();
+        return view('daftar', compact('smartphones'));
+    }
     public function store(Request $request)
     {
         // Validation
@@ -29,7 +34,6 @@ class SmartphoneController extends Controller
         $baterai = $request->input('baterai');
 
         // Calculate normalized values
-        print_r($harga);
 
         $prosesor_n = 0;
         $memori_n = 0;
@@ -120,9 +124,7 @@ class SmartphoneController extends Controller
             'resolusi_n' => $resolusi_n,
             'memori_n' => $memori_n,
         ]);
-
-        // Redirect back with success message
-        return redirect()->back()->with('success', 'Data successfully added!');
+        return redirect()->back()->with('success', 'Smartphone berhasil ditambahkan!');
     }
 
     public function destroy($id_hp)

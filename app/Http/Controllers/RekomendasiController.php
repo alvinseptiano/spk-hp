@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Smartphone;
 use Illuminate\Http\Request;
 
 class RekomendasiController extends Controller
@@ -18,7 +19,8 @@ class RekomendasiController extends Controller
             'baterai' => 'required',
         ]);
 
-        return view('hasil', [
+        return view('pages.hasil', [
+            'phones' => Smartphone::all(),
             'prosesor' => (int) $validated['prosesor'],
             'harga' => (int) $validated['harga'],
             'memori' => (int) $validated['memori'],

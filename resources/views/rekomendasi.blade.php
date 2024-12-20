@@ -8,7 +8,7 @@
 </header>
 
 <div class="shadow px-5 mb-10">
-    <form class="p-10" method="POST" action="{{ route('form.submit') }}">
+    <form class="p-10" method="POST" action="{{ route('hasil') }}">
         @csrf
         <div class="grid grid-cols-2 gap-6">
             <div class="p-y-2 col-span-1">
