@@ -60,7 +60,7 @@ Route::get('/dashboard', function () {
 
 Route::post('/hasil', function () {
     return view('pages.hasil');
-})->middleware(['auth', 'verified'])->name('hasil');
+})->name('hasil');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
