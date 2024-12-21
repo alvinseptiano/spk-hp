@@ -30,6 +30,8 @@ Route::get('/about', function () {
 
 Route::get('/list', [SmartphoneController::class, 'view'])->middleware(['auth', 'verified'])->name('list');
 
+Route::get('/listsearch', [SmartphoneController::class, 'search'])->name('listsearch');
+
 Route::get('/register', function () {
     return view('register');
 })->name('register');

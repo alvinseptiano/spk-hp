@@ -6,6 +6,14 @@
             <h1 class="text-3xl font-bold tracking-tight text-center">Rekomendasi Smartphone</h1>
         </div>
     </header>
+
+    <div class="mt-8 flex justify-center items-center">
+        <form action="{{ route('listsearch') }}" method="GET">
+            <input type="text" name="query" class="input" placeholder="Cari Smartphone">
+            <button class="ml-4 btn" type="submit">Search</button>
+        </form>
+    </div>
+
     <div class="divider"></div>
     <div class="flex-col container-lg py-8">
         <div class="relative overflow-x-auto shadow px-5">
@@ -48,46 +56,46 @@
                     </tr>
                 </thead>
                 <tbody>
-        @foreach ($phones as $phone) 
-                    <tr>
-                        <td>
-                            <center>{{ $loop->iteration }}</center>
-                        </td>
-                        <td>
-                            <center>{{ $phone->nama }}</center>
-                        </td>
-                        <td>
-                            <center>{{ $phone->harga }}</center>
-                        </td>
-                        <td>
-                            <center>{{ $phone->prosesor }}</center>
-                        </td>
-                        <td>
-                            <center>{{ $phone->kamera }} MP</center>
-                        </td>
-                        <td>
-                            <center>{{ $phone->ram }} BG</center>
-                        </td>
-                        <td>
-                            <center>{{ $phone->baterai }} mAH</center>
-                        </td>
-                        <td>
-                            <center>{{ $phone->resolusi }}</center>
-                        </td>
-                        <td>
-                            <center>{{ $phone->memori }} GB</center>
-                        </td>
-                        <td>
-                            <center>
-                                <form action="{{ route('smartphones.destroy', $phone->id_hp) }}" method="POST"
-                                    onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                    @csrf
-                                    <input type="image" src="{{ asset('img/delete.svg') }}" />
-                                </form>
-                            </center>
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach ($phones as $phone) 
+                        <tr>
+                            <td>
+                                <center>{{ $loop->iteration }}</center>
+                            </td>
+                            <td>
+                                <center>{{ $phone->nama }}</center>
+                            </td>
+                            <td>
+                                <center>{{ $phone->harga }}</center>
+                            </td>
+                            <td>
+                                <center>{{ $phone->prosesor }}</center>
+                            </td>
+                            <td>
+                                <center>{{ $phone->kamera }} MP</center>
+                            </td>
+                            <td>
+                                <center>{{ $phone->ram }} BG</center>
+                            </td>
+                            <td>
+                                <center>{{ $phone->baterai }} mAH</center>
+                            </td>
+                            <td>
+                                <center>{{ $phone->resolusi }}</center>
+                            </td>
+                            <td>
+                                <center>{{ $phone->memori }} GB</center>
+                            </td>
+                            <td>
+                                <center>
+                                    <form action="{{ route('smartphones.destroy', $phone->id_hp) }}" method="POST"
+                                        onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                        @csrf
+                                        <input type="image" src="{{ asset('img/delete.svg') }}" />
+                                    </form>
+                                </center>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -127,35 +135,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
-        @foreach ($phones as $phone)
-                    <tr>
-                        <td>
-                            <center>A{{ $loop->iteration }}</center>
-                        </td>
-                        <td>
-                            <center>{{  $phone->harga_n }}</center>
-                        </td>
-                        <td>
-                            <center>{{  $phone->prosesor_n }}</center>
-                        </td>
-                        <td>
-                            <center>{{  $phone->kamera_n }}</center>
-                        </td>
-                        <td>
-                            <center>{{  $phone->ram_n }}</center>
-                        </td>
-                        <td>
-                            <center>{{  $phone->baterai_n }}</center>
-                        </td>
-                        <td>
-                            <center>{{  $phone->resolusi_n }}</center>
-                        </td>
-                        <td>
-                            <center>{{  $phone->memori_n }}</center>
-                        </td>
-                    </tr>
-                @endforeach
+
+                    @foreach ($phones as $phone)
+                        <tr>
+                            <td>
+                                <center>A{{ $loop->iteration }}</center>
+                            </td>
+                            <td>
+                                <center>{{  $phone->harga_n }}</center>
+                            </td>
+                            <td>
+                                <center>{{  $phone->prosesor_n }}</center>
+                            </td>
+                            <td>
+                                <center>{{  $phone->kamera_n }}</center>
+                            </td>
+                            <td>
+                                <center>{{  $phone->ram_n }}</center>
+                            </td>
+                            <td>
+                                <center>{{  $phone->baterai_n }}</center>
+                            </td>
+                            <td>
+                                <center>{{  $phone->resolusi_n }}</center>
+                            </td>
+                            <td>
+                                <center>{{  $phone->memori_n }}</center>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

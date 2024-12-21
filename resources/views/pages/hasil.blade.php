@@ -6,6 +6,7 @@
         <h4 class="text-3xl font-bold tracking-tight text-center">
             Daftar Smartphone
         </h4>
+
         <table class="table">
             <thead class="text-xs text-white uppercase bg-gray-700 rounded-lg">
                 <tr>

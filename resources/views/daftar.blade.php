@@ -8,7 +8,6 @@
 </header>
 
 <div class="shadow px-5 mb-10">
-
     <form class="p-10" method="POST" action="{{ route('smartphones.store') }}">
         @csrf
         <div class="form-control grid gap-6 grid-cols-2 mb-10">
@@ -94,7 +93,7 @@
                 Tambah
             </button>
         </div>
-    </form>
+        /form>
 </div>
 
 </section>

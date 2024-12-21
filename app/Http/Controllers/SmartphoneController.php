@@ -136,4 +136,22 @@ class SmartphoneController extends Controller
 
         return redirect()->route('list')->with('success', 'Data successfully deleted!');
     }
+
+    public function search(Request $request)
+    {
+        $routeName = $request->route()->getName();
+
+        $query = $request->input('query'); // Get the search query
+        $phones = [];
+
+        if (empty($query)) {
+            // If the search query is empty, retrieve all data
+            $phones = Smartphone::all();
+            $query = "";
+        } else {
+            // If a search query is provided, filter the results
+            $phones = Smartphone::where('nama', 'LIKE', "%{$query}%")->orWhere('id_hp', 'LIKE', "%{$query}%")->get();
+        }
+        return view('list', compact('phones'));
+    }
 }
