@@ -1,14 +1,14 @@
 <script setup>
 import TopBar from '@/Components/TopBar.vue';
-import { Link as InertiaLink } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 import SideBarIcon from '@/Components/SideBarIcon.vue';
+import MenuItem from '@/Components/MenuItem.vue';
 import {
     UserIcon,
     TableCellsIcon,
-    FolderIcon,
-    ArrowUpOnSquareStackIcon,
-    HomeIcon,
+    DevicePhoneMobileIcon,
+    DocumentChartBarIcon,
+    ChartBarIcon,
 } from '@heroicons/vue/24/solid';
 
 const isOpen = ref(localStorage.getItem('sidebarOpen') === 'true' || false);
@@ -16,10 +16,6 @@ const isOpen = ref(localStorage.getItem('sidebarOpen') === 'true' || false);
 watch(isOpen, (newValue) => {
     localStorage.setItem('sidebarOpen', newValue);
 });
-
-const isActive = (path) => {
-    return window.location.pathname === path;
-};
 </script>
 
 <template>
@@ -59,157 +55,70 @@ const isActive = (path) => {
                     <nav class="w-full">
                         <ul class="menu w-full font-bold">
                             <div class="divider my-1 shrink-0"></div>
-                            <li class="rounded">
-                                <InertiaLink
-                                    href="/dashboard"
-                                    :class="[
-                                        'relative flex items-center py-4',
-                                        {
-                                            'bg-primary/10':
-                                                isActive('/dashboard'),
-                                        },
-                                        !isOpen && 'justify-center',
-                                    ]"
-                                >
-                                    <div
-                                        v-if="isActive('/dashboard')"
-                                        class="absolute left-0 top-0 h-full w-1 bg-primary"
-                                    ></div>
-                                    <HomeIcon
-                                        :class="[
-                                            'size-5',
-                                            {
-                                                'text-primary':
-                                                    isActive('/dashboard'),
-                                            },
-                                        ]"
-                                    />
-                                    <span :class="['ml-2', !isOpen && 'hidden']"
-                                        >Home</span
-                                    >
-                                </InertiaLink>
-                            </li>
-                            <li class="rounded">
-                                <InertiaLink
-                                    href="/uploadfile"
-                                    :class="[
-                                        'relative flex items-center py-4',
-                                        {
-                                            'bg-primary/10':
-                                                isActive('/uploadfile'),
-                                        },
-                                        !isOpen && 'justify-center',
-                                    ]"
-                                >
-                                    <div
-                                        v-if="isActive('/uploadfile')"
-                                        class="absolute left-0 top-0 h-full w-1 bg-primary"
-                                    ></div>
-                                    <ArrowUpOnSquareStackIcon
-                                        :class="[
-                                            'size-5',
-                                            {
-                                                'text-primary':
-                                                    isActive('/uploadfile'),
-                                            },
-                                        ]"
-                                    />
-                                    <span :class="['ml-2', !isOpen && 'hidden']"
-                                        >Upload File</span
-                                    >
-                                </InertiaLink>
-                            </li>
-                            <li class="rounded">
-                                <InertiaLink
-                                    href="/myfiles"
-                                    :class="[
-                                        'relative flex items-center py-4',
-                                        {
-                                            'bg-primary/10':
-                                                isActive('/myfiles'),
-                                        },
-                                        !isOpen && 'justify-center',
-                                    ]"
-                                >
-                                    <div
-                                        v-if="isActive('/myfiles')"
-                                        class="absolute left-0 top-0 h-full w-1 bg-primary"
-                                    ></div>
-                                    <FolderIcon
-                                        :class="[
-                                            'size-5',
-                                            {
-                                                'text-primary':
-                                                    isActive('/myfiles'),
-                                            },
-                                        ]"
-                                    />
-                                    <span :class="['ml-2', !isOpen && 'hidden']"
-                                        >My Files</span
-                                    >
-                                </InertiaLink>
-                            </li>
-                            <li class="rounded">
-                                <InertiaLink
-                                    href="/hextable"
-                                    :class="[
-                                        'relative flex items-center py-4',
-                                        {
-                                            'bg-primary/10':
-                                                isActive('/hextable'),
-                                        },
-                                        !isOpen && 'justify-center',
-                                    ]"
-                                >
-                                    <div
-                                        v-if="isActive('/hextable')"
-                                        class="absolute left-0 top-0 h-full w-1 bg-primary"
-                                    ></div>
-                                    <TableCellsIcon
-                                        :class="[
-                                            'size-5',
-                                            {
-                                                'text-primary':
-                                                    isActive('/hextable'),
-                                            },
-                                        ]"
-                                    />
-                                    <span :class="['ml-2', !isOpen && 'hidden']"
-                                        >Hex Table</span
-                                    >
-                                </InertiaLink>
-                            </li>
+                            <!-- <li>
+                                <div tabindex="0" class="collapse">
+                                    <div class="collapse-title font-medium">
+                                        <div class="relative flex items-center">
+                                            <DocumentChartBarIcon
+                                                class="-ml-4 size-5"
+                                            />
+                                            <span
+                                                :class="[
+                                                    'ml-2',
+                                                    !isOpen && 'hidden',
+                                                ]"
+                                                >Data</span
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="collapse-content">
+                                        <div class="flex flex-col gap-2 pt-2">
+                                            <InertiaLink class="w-full">
+                                                <p class="px-2 py-1">
+                                                    Alternatif
+                                                </p>
+                                            </InertiaLink>
+                                            <InertiaLink class="w-full">
+                                                <p class="px-2 py-1">
+                                                    Kriteria
+                                                </p>
+                                            </InertiaLink>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li> -->
+                            <MenuItem
+                                :icon="DocumentChartBarIcon"
+                                :name="`Input Data`"
+                                :link="`inputdata`"
+                                :isOpen="isOpen"
+                            />
+                            <MenuItem
+                                :icon="DevicePhoneMobileIcon"
+                                :name="`Rekomendasi`"
+                                :link="`rekomendasi`"
+                                :isOpen="isOpen"
+                            />
+                            <MenuItem
+                                :icon="TableCellsIcon"
+                                :name="`Matrik`"
+                                :link="`matrix`"
+                                :isOpen="isOpen"
+                            />
+
+                            <MenuItem
+                                :icon="ChartBarIcon"
+                                :name="`Nilai Preferensi`"
+                                :link="`preferensi`"
+                                :isOpen="isOpen"
+                            />
                             <div class="divider my-1 shrink-0"></div>
-                            <li class="rounded">
-                                <InertiaLink
-                                    href="/profile"
-                                    :class="[
-                                        'relative flex items-center py-4',
-                                        {
-                                            'bg-primary/10':
-                                                isActive('/profile'),
-                                        },
-                                        !isOpen && 'justify-center',
-                                    ]"
-                                >
-                                    <div
-                                        v-if="isActive('/profile')"
-                                        class="absolute left-0 top-0 h-full w-1 bg-primary"
-                                    ></div>
-                                    <UserIcon
-                                        :class="[
-                                            'size-5',
-                                            {
-                                                'text-primary':
-                                                    isActive('/profile'),
-                                            },
-                                        ]"
-                                    />
-                                    <span :class="['ml-2', !isOpen && 'hidden']"
-                                        >Akun</span
-                                    >
-                                </InertiaLink>
-                            </li>
+                            <MenuItem
+                                :icon="UserIcon"
+                                :name="`Akun`"
+                                :link="`profile`"
+                                :isOpen="isOpen"
+                            />
                         </ul>
                     </nav>
                 </div>

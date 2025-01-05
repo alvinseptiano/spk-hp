@@ -65,7 +65,7 @@ onMounted(() => {
         </div>
 
         <div class="navbar-center">
-            <a class="btn btn-ghost text-xl">Encrypt it</a>
+            <a href="/dashboard" class="btn btn-ghost text-xl">Encrypt it</a>
         </div>
 
         <div class="navbar-end">
