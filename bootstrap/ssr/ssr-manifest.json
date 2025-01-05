@@ -1,0 +1,89 @@
+{
+  "\u0000plugin-vue:export-helper": [
+    "/build/assets/_plugin-vue_export-helper-1tPrXgE0.js"
+  ],
+  "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
+  "resources/js/Components/Checkbox.vue": [
+    "/build/assets/Checkbox-CFe2cyP3.js"
+  ],
+  "resources/js/Components/DangerButton.vue": [
+    "/build/assets/DeleteUserForm-DKuPgsN7.js"
+  ],
+  "resources/js/Components/Heading.vue": [
+    "/build/assets/FileUpload-_oZyTFZi.js"
+  ],
+  "resources/js/Components/InputError.vue": [
+    "/build/assets/TextInput-Dg4nfphw.js"
+  ],
+  "resources/js/Components/InputLabel.vue": [
+    "/build/assets/TextInput-Dg4nfphw.js"
+  ],
+  "resources/js/Components/Modal.vue": [
+    "/build/assets/DeleteUserForm-DKuPgsN7.js"
+  ],
+  "resources/js/Components/PrimaryButton.vue": [
+    "/build/assets/PrimaryButton-CbzYxQ0I.js"
+  ],
+  "resources/js/Components/SecondaryButton.vue": [
+    "/build/assets/DeleteUserForm-DKuPgsN7.js"
+  ],
+  "resources/js/Components/SideBarIcon.vue": [
+    "/build/assets/AuthenticatedLayout-DALFCgFp.js"
+  ],
+  "resources/js/Components/TextInput.vue": [
+    "/build/assets/TextInput-Dg4nfphw.js"
+  ],
+  "resources/js/Components/TopBar.vue": [
+    "/build/assets/AuthenticatedLayout-DALFCgFp.js"
+  ],
+  "resources/js/Layouts/AuthenticatedLayout.vue": [
+    "/build/assets/AuthenticatedLayout-DALFCgFp.js"
+  ],
+  "resources/js/Layouts/GuestLayout.vue": [
+    "/build/assets/GuestLayout-UngZep-1.js"
+  ],
+  "resources/js/Pages/Auth/ConfirmPassword.vue": [
+    "/build/assets/ConfirmPassword-zRgG1QCu.js"
+  ],
+  "resources/js/Pages/Auth/ForgotPassword.vue": [
+    "/build/assets/ForgotPassword-DS9j5bcj.js"
+  ],
+  "resources/js/Pages/Auth/Login.vue": [
+    "/build/assets/Login-BJG1LJip.js"
+  ],
+  "resources/js/Pages/Auth/Register.vue": [
+    "/build/assets/Register-C10blJ0p.js"
+  ],
+  "resources/js/Pages/Auth/ResetPassword.vue": [
+    "/build/assets/ResetPassword-B0oEaBba.js"
+  ],
+  "resources/js/Pages/Auth/VerifyEmail.vue": [
+    "/build/assets/VerifyEmail-BtSnXDzE.js"
+  ],
+  "resources/js/Pages/FileUpload.vue": [
+    "/build/assets/FileUpload-_oZyTFZi.js"
+  ],
+  "resources/js/Pages/Home.vue": [
+    "/build/assets/Home-Cmest_2b.js"
+  ],
+  "resources/js/Pages/MyFiles.vue": [
+    "/build/assets/MyFiles-nS-AOJV2.js"
+  ],
+  "resources/js/Pages/Profile/Edit.vue": [
+    "/build/assets/Edit-BHZHg2x-.js"
+  ],
+  "resources/js/Pages/Profile/Partials/DeleteUserForm.vue": [
+    "/build/assets/DeleteUserForm-DKuPgsN7.js"
+  ],
+  "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue": [
+    "/build/assets/UpdatePasswordForm-BxySfw41.js"
+  ],
+  "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue": [
+    "/build/assets/UpdateProfileInformationForm-CUtN6tYX.js"
+  ],
+  "resources/js/Pages/Welcome.vue": [
+    "/build/assets/Welcome-DMaBece4.js"
+  ],
+  "resources/js/ssr.js": [],
+  "vendor/tightenco/ziggy/dist/index.js": []
+}
