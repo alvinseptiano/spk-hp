@@ -1,7 +1,8 @@
 import { mergeProps, useSSRContext, ref, watch, onMounted, onUnmounted, computed, withCtx, createTextVNode, unref, createVNode, withKeys, nextTick } from "vue";
 import { ssrRenderAttrs, ssrRenderSlot, ssrRenderStyle, ssrRenderClass, ssrRenderComponent } from "vue/server-renderer";
 import { _ as _export_sfc } from "./_plugin-vue_export-helper-1tPrXgE0.js";
-import { _ as _sfc_main$4, a as _sfc_main$5, b as _sfc_main$6 } from "./TextInput-Dg4nfphw.js";
+import { _ as _sfc_main$4, a as _sfc_main$6 } from "./InputLabel-CT4EXiTY.js";
+import { _ as _sfc_main$5 } from "./TextInput-B0jZlu5A.js";
 import { useForm } from "@inertiajs/vue3";
 const _sfc_main$3 = {};
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {

@@ -24,11 +24,22 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Matrix');
     })->name('matrix');
 
+    Route::get('/rekomendasi', function () {
+        return Inertia::render('Rekomendasi');
+    })->name('rekomendasi');
+
     Route::get('/inputdata', function () {
         return Inertia::render('DataForm');
     })->name('inputdata');
 
+    Route::get('/preferensi', function () {
+        return Inertia::render('Preferensi');
+    })->name('preferensi');
+
     Route::get('/getsmartphone', [SmartphoneController::class, 'index']);
+    Route::get('/getranking', [SmartphoneController::class, 'index']);
+
+    Route::post('/add', [SmartphoneController::class], 'addColumn');
 
     Route::get('/username', [ProfileController::class, 'get']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

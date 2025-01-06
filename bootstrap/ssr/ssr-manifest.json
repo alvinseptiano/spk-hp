@@ -3,83 +3,95 @@
     "/build/assets/_plugin-vue_export-helper-1tPrXgE0.js"
   ],
   "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
+  "resources/js/Components/AccentButton.vue": [
+    "/build/assets/DataForm-9q6rJa9G.js"
+  ],
   "resources/js/Components/Checkbox.vue": [
-    "/build/assets/Checkbox-CFe2cyP3.js"
+    "/build/assets/Login-BMzno4i3.js"
   ],
   "resources/js/Components/DangerButton.vue": [
-    "/build/assets/DeleteUserForm-DKuPgsN7.js"
-  ],
-  "resources/js/Components/Heading.vue": [
-    "/build/assets/FileUpload-_oZyTFZi.js"
+    "/build/assets/DeleteUserForm-B38YoOam.js"
   ],
   "resources/js/Components/InputError.vue": [
-    "/build/assets/TextInput-Dg4nfphw.js"
+    "/build/assets/InputLabel-CT4EXiTY.js"
   ],
   "resources/js/Components/InputLabel.vue": [
-    "/build/assets/TextInput-Dg4nfphw.js"
+    "/build/assets/InputLabel-CT4EXiTY.js"
+  ],
+  "resources/js/Components/MenuItem.vue": [
+    "/build/assets/AuthenticatedLayout-C9N4_aJT.js"
   ],
   "resources/js/Components/Modal.vue": [
-    "/build/assets/DeleteUserForm-DKuPgsN7.js"
+    "/build/assets/DeleteUserForm-B38YoOam.js"
   ],
   "resources/js/Components/PrimaryButton.vue": [
     "/build/assets/PrimaryButton-CbzYxQ0I.js"
   ],
   "resources/js/Components/SecondaryButton.vue": [
-    "/build/assets/DeleteUserForm-DKuPgsN7.js"
+    "/build/assets/DeleteUserForm-B38YoOam.js"
   ],
   "resources/js/Components/SideBarIcon.vue": [
-    "/build/assets/AuthenticatedLayout-DALFCgFp.js"
+    "/build/assets/AuthenticatedLayout-C9N4_aJT.js"
   ],
   "resources/js/Components/TextInput.vue": [
-    "/build/assets/TextInput-Dg4nfphw.js"
+    "/build/assets/TextInput-B0jZlu5A.js"
   ],
   "resources/js/Components/TopBar.vue": [
-    "/build/assets/AuthenticatedLayout-DALFCgFp.js"
+    "/build/assets/AuthenticatedLayout-C9N4_aJT.js"
   ],
   "resources/js/Layouts/AuthenticatedLayout.vue": [
-    "/build/assets/AuthenticatedLayout-DALFCgFp.js"
+    "/build/assets/AuthenticatedLayout-C9N4_aJT.js"
   ],
   "resources/js/Layouts/GuestLayout.vue": [
     "/build/assets/GuestLayout-UngZep-1.js"
   ],
   "resources/js/Pages/Auth/ConfirmPassword.vue": [
-    "/build/assets/ConfirmPassword-zRgG1QCu.js"
+    "/build/assets/ConfirmPassword-BnABoIC3.js"
   ],
   "resources/js/Pages/Auth/ForgotPassword.vue": [
-    "/build/assets/ForgotPassword-DS9j5bcj.js"
+    "/build/assets/ForgotPassword-DKhWbEEb.js"
   ],
   "resources/js/Pages/Auth/Login.vue": [
-    "/build/assets/Login-BJG1LJip.js"
+    "/build/assets/Login-BMzno4i3.js"
   ],
   "resources/js/Pages/Auth/Register.vue": [
-    "/build/assets/Register-C10blJ0p.js"
+    "/build/assets/Register-twjD4M23.js"
   ],
   "resources/js/Pages/Auth/ResetPassword.vue": [
-    "/build/assets/ResetPassword-B0oEaBba.js"
+    "/build/assets/ResetPassword-CP54SaLM.js"
   ],
   "resources/js/Pages/Auth/VerifyEmail.vue": [
     "/build/assets/VerifyEmail-BtSnXDzE.js"
   ],
-  "resources/js/Pages/FileUpload.vue": [
-    "/build/assets/FileUpload-_oZyTFZi.js"
+  "resources/js/Pages/DataForm.vue": [
+    "/build/assets/DataForm-9q6rJa9G.js"
   ],
   "resources/js/Pages/Home.vue": [
-    "/build/assets/Home-Cmest_2b.js"
+    "/build/assets/Home-f4RiSY5f.js"
+  ],
+  "resources/js/Pages/Matrix.vue": [
+    "/build/assets/Matrix-DBvl1W6h.js"
   ],
   "resources/js/Pages/MyFiles.vue": [
-    "/build/assets/MyFiles-nS-AOJV2.js"
+    "/build/assets/MyFiles-D72Z0STa.js"
+  ],
+  "resources/js/Pages/Preferensi.vue": [
+    "/build/assets/Preferensi-XqoAySEG.js"
   ],
   "resources/js/Pages/Profile/Edit.vue": [
-    "/build/assets/Edit-BHZHg2x-.js"
+    "/build/assets/Edit-CnRtMXMH.js"
   ],
   "resources/js/Pages/Profile/Partials/DeleteUserForm.vue": [
-    "/build/assets/DeleteUserForm-DKuPgsN7.js"
+    "/build/assets/DeleteUserForm-B38YoOam.js"
   ],
   "resources/js/Pages/Profile/Partials/UpdatePasswordForm.vue": [
-    "/build/assets/UpdatePasswordForm-BxySfw41.js"
+    "/build/assets/UpdatePasswordForm-BA44kQFq.js"
   ],
   "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.vue": [
-    "/build/assets/UpdateProfileInformationForm-CUtN6tYX.js"
+    "/build/assets/UpdateProfileInformationForm-OFa5CY3_.js"
+  ],
+  "resources/js/Pages/Rekomendasi.vue": [
+    "/build/assets/Rekomendasi-Bq0NwJ9R.js"
   ],
   "resources/js/Pages/Welcome.vue": [
     "/build/assets/Welcome-DMaBece4.js"

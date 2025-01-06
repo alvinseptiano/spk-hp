@@ -1,6 +1,6 @@
 import { ref, watch, onMounted, withCtx, unref, createVNode, useSSRContext } from "vue";
 import { ssrRenderComponent } from "vue/server-renderer";
-import { _ as _sfc_main$1 } from "./AuthenticatedLayout-DALFCgFp.js";
+import { _ as _sfc_main$1 } from "./AuthenticatedLayout-C9N4_aJT.js";
 import { Head } from "@inertiajs/vue3";
 import { Line } from "vue-chartjs";
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";

@@ -1,7 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { ref, onMounted } from 'vue';
-
+import { Head } from '@inertiajs/vue3';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/solid';
 // Refs
 const tableData = ref([]);
 
@@ -22,152 +23,103 @@ onMounted(async () => {
 
 <template>
     <AuthenticatedLayout>
-        <Head title="Dashboard" />
-        <div class="mt-6 flex flex-col gap-4">
-            <div class="rounded-lg bg-base-100">
-                <div class="overflow-auto">
-                    <!-- <div class="mockup-phone">
-                        <div class="camera"></div>
-                        <div class="display">
-                            <div
-                                class="artboard artboard-demo phone-1 text-center text-3xl font-bold"
+        <Head title="Data Matrik" />
+        <div class="flex flex-col gap-4">
+            <div class="relative h-[calc(100vh-100px)] overflow-auto">
+                <table class="table table-pin-cols table-xs w-full">
+                    <thead>
+                        <tr>
+                            <th
+                                class="py-3 text-left text-xs font-medium uppercase"
                             >
-                                Rekomendasi smartphone anda adalah Xiaomi
-                            </div>
-                        </div>
-                    </div> -->
-                    <table class="table table-pin-rows table-sm z-10 w-full">
-                        <thead>
-                            <tr>
-                                <th style="width: 5%">
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            class="checkbox"
-                                        />
-                                    </label>
-                                </th>
-                                <th
-                                    class="py-3 text-left text-xs font-medium uppercase"
-                                    style="width: 20.5%"
-                                >
-                                    Nama
-                                </th>
-                                <th
-                                    class="py-3 text-left text-xs font-medium uppercase"
-                                    style="width: 13.5%"
-                                >
-                                    Harga
-                                </th>
-                                <th
-                                    class="py-3 text-left text-xs font-medium uppercase"
-                                    style="width: 13.5%"
-                                >
-                                    Prosesor
-                                </th>
-                                <th
-                                    class="py-3 text-left text-xs font-medium uppercase"
-                                    style="width: 13.5%"
-                                >
-                                    RAM
-                                </th>
-                                <th
-                                    class="py-3 text-left text-xs font-medium uppercase"
-                                    style="width: 13.5%"
-                                >
-                                    Internal
-                                </th>
-                                <th
-                                    class="py-3 text-left text-xs font-medium uppercase"
-                                    style="width: 13.5%"
-                                >
-                                    Resolusi
-                                </th>
-                                <th
-                                    class="py-3 text-left text-xs font-medium uppercase"
-                                    style="width: 13.5%"
-                                >
-                                    Baterai
-                                </th>
-                                <th
-                                    class="py-3 text-left text-xs font-medium uppercase"
-                                    style="width: 7%"
-                                >
-                                    Aksi
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Rest of the code remains the same -->
-                            <tr
-                                v-for="item in tableData"
-                                :key="item.id_hp"
-                                class="hover bg-base-200"
+                                Nama
+                            </th>
+                            <th
+                                class="py-3 text-left text-xs font-medium uppercase"
                             >
-                                <td>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            class="checkbox"
-                                        />
-                                    </label>
-                                </td>
-                                <td class="py-4 text-sm">
-                                    {{ item.nama }}
-                                </td>
-                                <td class="py-4 text-sm">
-                                    {{ item.harga }}
-                                </td>
-                                <td class="py-4 text-sm">
-                                    {{ item.prosesor }}
-                                </td>
-                                <td class="py-4 text-sm">
-                                    {{ item.ram }}
-                                </td>
-                                <td class="py-4 text-sm">
-                                    {{ item.kamera }}
-                                </td>
-                                <td class="py-4 text-sm">
-                                    {{ item.resolusi }}
-                                </td>
-                                <td class="py-4 text-sm">
-                                    {{ item.baterai }}
-                                </td>
-                                <td class="py-4 text-sm">
-                                    <div class="dropdown dropdown-end">
-                                        <button
-                                            tabindex="0"
-                                            class="pi pi-ellipsis-v"
-                                        ></button>
-                                        <ul
-                                            tabindex="0"
-                                            class="menu dropdown-content rounded-box bg-base-200 p-2 shadow"
-                                        >
-                                            <li>
-                                                <button
-                                                    @click="
-                                                        downloadFile(item.path)
-                                                    "
-                                                    v-if="item.is_file"
-                                                >
-                                                    Download
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <button
-                                                    @click="deleteItem(item)"
-                                                    class="text-error"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                Harga
+                            </th>
+                            <th
+                                class="py-3 text-left text-xs font-medium uppercase"
+                            >
+                                Prosesor
+                            </th>
+                            <th
+                                class="py-3 text-left text-xs font-medium uppercase"
+                            >
+                                RAM
+                            </th>
+                            <th
+                                class="py-3 text-left text-xs font-medium uppercase"
+                            >
+                                Internal
+                            </th>
+                            <th
+                                class="py-3 text-left text-xs font-medium uppercase"
+                            >
+                                Resolusi
+                            </th>
+                            <th
+                                class="py-3 text-left text-xs font-medium uppercase"
+                            >
+                                Baterai
+                            </th>
+                            <th
+                                class="py-3 text-left text-xs font-medium uppercase"
+                            >
+                                Aksi
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="item in tableData"
+                            :key="item.id_hp"
+                            class="hover bg-base-200"
+                        >
+                            <th class="py-4 text-sm">
+                                {{ item.name }}
+                            </th>
+                            <th class="py-4 text-sm">
+                                {{
+                                    new Intl.NumberFormat('id-ID', {
+                                        style: 'currency',
+                                        currency: 'IDR',
+                                    }).format(item.price)
+                                }}
+                            </th>
+                            <th class="py-4 text-sm">
+                                {{ item.processor }}
+                            </th>
+                            <th class="py-4 text-sm">
+                                {{ item.ram }}
+                            </th>
+                            <th class="py-4 text-sm">
+                                {{ item.camera }}
+                            </th>
+                            <th class="py-4 text-sm">
+                                {{ item.screen }}
+                            </th>
+                            <th class="py-4 text-sm">
+                                {{ item.battery }}
+                            </th>
+                            <th class="py-4 text-sm">
+                                <button
+                                    class="btn btn-ghost btn-sm"
+                                    @click="handleDelete"
+                                >
+                                    <PencilSquareIcon class="size-5" />
+                                </button>
+                                <button
+                                    class="btn btn-ghost btn-sm"
+                                    @click="handleDelete"
+                                >
+                                    <TrashIcon class="size-5 text-error" />
+                                </button>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </AuthenticatedLayout>

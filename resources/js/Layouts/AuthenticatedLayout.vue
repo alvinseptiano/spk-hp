@@ -55,48 +55,10 @@ watch(isOpen, (newValue) => {
                     <nav class="w-full">
                         <ul class="menu w-full font-bold">
                             <div class="divider my-1 shrink-0"></div>
-                            <!-- <li>
-                                <div tabindex="0" class="collapse">
-                                    <div class="collapse-title font-medium">
-                                        <div class="relative flex items-center">
-                                            <DocumentChartBarIcon
-                                                class="-ml-4 size-5"
-                                            />
-                                            <span
-                                                :class="[
-                                                    'ml-2',
-                                                    !isOpen && 'hidden',
-                                                ]"
-                                                >Data</span
-                                            >
-                                        </div>
-                                    </div>
-                                    <div class="collapse-content">
-                                        <div class="flex flex-col gap-2 pt-2">
-                                            <InertiaLink class="w-full">
-                                                <p class="px-2 py-1">
-                                                    Alternatif
-                                                </p>
-                                            </InertiaLink>
-                                            <InertiaLink class="w-full">
-                                                <p class="px-2 py-1">
-                                                    Kriteria
-                                                </p>
-                                            </InertiaLink>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li> -->
                             <MenuItem
                                 :icon="DocumentChartBarIcon"
                                 :name="`Input Data`"
                                 :link="`inputdata`"
-                                :isOpen="isOpen"
-                            />
-                            <MenuItem
-                                :icon="DevicePhoneMobileIcon"
-                                :name="`Rekomendasi`"
-                                :link="`rekomendasi`"
                                 :isOpen="isOpen"
                             />
                             <MenuItem
@@ -112,6 +74,12 @@ watch(isOpen, (newValue) => {
                                 :link="`preferensi`"
                                 :isOpen="isOpen"
                             />
+                            <MenuItem
+                                :icon="DevicePhoneMobileIcon"
+                                :name="`Rekomendasi`"
+                                :link="`rekomendasi`"
+                                :isOpen="isOpen"
+                            />
                             <div class="divider my-1 shrink-0"></div>
                             <MenuItem
                                 :icon="UserIcon"
@@ -125,7 +93,10 @@ watch(isOpen, (newValue) => {
             </div>
 
             <main
-                :class="['flex-1 p-4', { 'ml-24': !isOpen, 'ml-52': isOpen }]"
+                :class="[
+                    'flex-1 overflow-auto p-4',
+                    { 'ml-24': !isOpen, 'ml-52': isOpen },
+                ]"
             >
                 <slot />
             </main>

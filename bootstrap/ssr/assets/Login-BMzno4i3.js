@@ -1,12 +1,53 @@
-import { withCtx, unref, createTextVNode, createVNode, openBlock, createBlock, toDisplayString, createCommentVNode, withModifiers, useSSRContext } from "vue";
-import { ssrRenderComponent, ssrInterpolate } from "vue/server-renderer";
-import { _ as _sfc_main$5 } from "./Checkbox-CFe2cyP3.js";
-import { _ as _sfc_main$1 } from "./GuestLayout-UngZep-1.js";
-import { _ as _sfc_main$2, a as _sfc_main$3, b as _sfc_main$4 } from "./TextInput-Dg4nfphw.js";
+import { computed, mergeProps, useSSRContext, withCtx, unref, createTextVNode, createVNode, openBlock, createBlock, toDisplayString, createCommentVNode, withModifiers } from "vue";
+import { ssrRenderAttrs, ssrLooseContain, ssrGetDynamicModelProps, ssrRenderComponent, ssrInterpolate } from "vue/server-renderer";
+import { _ as _sfc_main$2 } from "./GuestLayout-UngZep-1.js";
+import { _ as _sfc_main$3, a as _sfc_main$5 } from "./InputLabel-CT4EXiTY.js";
 import { P as PrimaryButton } from "./PrimaryButton-CbzYxQ0I.js";
+import { _ as _sfc_main$4 } from "./TextInput-B0jZlu5A.js";
 import { usePage, useForm, Head, Link } from "@inertiajs/vue3";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/solid";
 import "./_plugin-vue_export-helper-1tPrXgE0.js";
+const _sfc_main$1 = {
+  __name: "Checkbox",
+  __ssrInlineRender: true,
+  props: {
+    checked: {
+      type: [Array, Boolean],
+      required: true
+    },
+    value: {
+      default: null
+    }
+  },
+  emits: ["update:checked"],
+  setup(__props, { emit: __emit }) {
+    const emit = __emit;
+    const props = __props;
+    const proxyChecked = computed({
+      get() {
+        return props.checked;
+      },
+      set(val) {
+        emit("update:checked", val);
+      }
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      let _temp0;
+      _push(`<input${ssrRenderAttrs((_temp0 = mergeProps({
+        type: "checkbox",
+        value: __props.value,
+        checked: Array.isArray(proxyChecked.value) ? ssrLooseContain(proxyChecked.value, __props.value) : proxyChecked.value,
+        class: "checkbox"
+      }, _attrs), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, proxyChecked.value))))}>`);
+    };
+  }
+};
+const _sfc_setup$1 = _sfc_main$1.setup;
+_sfc_main$1.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/Components/Checkbox.vue");
+  return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
+};
 const _sfc_main = {
   __name: "Login",
   __ssrInlineRender: true,
@@ -32,7 +73,7 @@ const _sfc_main = {
       });
     };
     return (_ctx, _push, _parent, _attrs) => {
-      _push(ssrRenderComponent(_sfc_main$1, _attrs, {
+      _push(ssrRenderComponent(_sfc_main$2, _attrs, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
             _push2(ssrRenderComponent(unref(Head), { title: "Log in" }, null, _parent2, _scopeId));
@@ -47,11 +88,11 @@ const _sfc_main = {
               _push2(`<!---->`);
             }
             _push2(`<div class="flex justify-center bg-base-100"${_scopeId}><div class="mx-64 mt-20 min-w-96 rounded-xl p-4 outline outline-2"${_scopeId}><h1 class="text-center text-3xl font-extrabold"${_scopeId}>Sign in</h1><form${_scopeId}><div${_scopeId}>`);
-            _push2(ssrRenderComponent(_sfc_main$2, {
+            _push2(ssrRenderComponent(_sfc_main$3, {
               for: "email",
               value: "Email"
             }, null, _parent2, _scopeId));
-            _push2(ssrRenderComponent(_sfc_main$3, {
+            _push2(ssrRenderComponent(_sfc_main$4, {
               id: "email",
               type: "email",
               class: "mt-1 block w-full",
@@ -61,16 +102,16 @@ const _sfc_main = {
               autofocus: "",
               autocomplete: "username"
             }, null, _parent2, _scopeId));
-            _push2(ssrRenderComponent(_sfc_main$4, {
+            _push2(ssrRenderComponent(_sfc_main$5, {
               class: "mt-2",
               message: unref(form).errors.email
             }, null, _parent2, _scopeId));
             _push2(`</div><div class="mt-4"${_scopeId}>`);
-            _push2(ssrRenderComponent(_sfc_main$2, {
+            _push2(ssrRenderComponent(_sfc_main$3, {
               for: "password",
               value: "Password"
             }, null, _parent2, _scopeId));
-            _push2(ssrRenderComponent(_sfc_main$3, {
+            _push2(ssrRenderComponent(_sfc_main$4, {
               id: "password",
               type: "password",
               class: "mt-1 block w-full",
@@ -79,14 +120,14 @@ const _sfc_main = {
               required: "",
               autocomplete: "current-password"
             }, null, _parent2, _scopeId));
-            _push2(ssrRenderComponent(_sfc_main$4, {
+            _push2(ssrRenderComponent(_sfc_main$5, {
               class: "mt-2",
               message: unref(form).errors.password
             }, null, _parent2, _scopeId));
             _push2(`</div><div class="mt-4 block"${_scopeId}><div role="alert" class="alert"${_scopeId}>`);
             _push2(ssrRenderComponent(unref(ExclamationTriangleIcon), { class: "h-5 w-5 text-warning" }, null, _parent2, _scopeId));
             _push2(`<span${_scopeId}>Gagal Login: Page Expire</span></div></div><div class="mt-4 block"${_scopeId}><label class="flex items-center"${_scopeId}>`);
-            _push2(ssrRenderComponent(_sfc_main$5, {
+            _push2(ssrRenderComponent(_sfc_main$1, {
               name: "remember",
               checked: unref(form).remember,
               "onUpdate:checked": ($event) => unref(form).remember = $event
@@ -161,11 +202,11 @@ const _sfc_main = {
                     onSubmit: withModifiers(submit, ["prevent"])
                   }, [
                     createVNode("div", null, [
-                      createVNode(_sfc_main$2, {
+                      createVNode(_sfc_main$3, {
                         for: "email",
                         value: "Email"
                       }),
-                      createVNode(_sfc_main$3, {
+                      createVNode(_sfc_main$4, {
                         id: "email",
                         type: "email",
                         class: "mt-1 block w-full",
@@ -175,17 +216,17 @@ const _sfc_main = {
                         autofocus: "",
                         autocomplete: "username"
                       }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                      createVNode(_sfc_main$4, {
+                      createVNode(_sfc_main$5, {
                         class: "mt-2",
                         message: unref(form).errors.email
                       }, null, 8, ["message"])
                     ]),
                     createVNode("div", { class: "mt-4" }, [
-                      createVNode(_sfc_main$2, {
+                      createVNode(_sfc_main$3, {
                         for: "password",
                         value: "Password"
                       }),
-                      createVNode(_sfc_main$3, {
+                      createVNode(_sfc_main$4, {
                         id: "password",
                         type: "password",
                         class: "mt-1 block w-full",
@@ -194,7 +235,7 @@ const _sfc_main = {
                         required: "",
                         autocomplete: "current-password"
                       }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                      createVNode(_sfc_main$4, {
+                      createVNode(_sfc_main$5, {
                         class: "mt-2",
                         message: unref(form).errors.password
                       }, null, 8, ["message"])
@@ -210,7 +251,7 @@ const _sfc_main = {
                     ]),
                     createVNode("div", { class: "mt-4 block" }, [
                       createVNode("label", { class: "flex items-center" }, [
-                        createVNode(_sfc_main$5, {
+                        createVNode(_sfc_main$1, {
                           name: "remember",
                           checked: unref(form).remember,
                           "onUpdate:checked": ($event) => unref(form).remember = $event

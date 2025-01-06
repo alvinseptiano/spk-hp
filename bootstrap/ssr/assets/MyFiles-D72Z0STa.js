@@ -1,6 +1,6 @@
 import { ref, computed, onMounted, withCtx, unref, createVNode, openBlock, createBlock, Fragment, renderList, toDisplayString, createCommentVNode, withDirectives, vModelText, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrRenderList, ssrInterpolate, ssrRenderClass, ssrRenderAttr } from "vue/server-renderer";
-import { _ as _sfc_main$1 } from "./AuthenticatedLayout-DALFCgFp.js";
+import { _ as _sfc_main$1 } from "./AuthenticatedLayout-C9N4_aJT.js";
 import axios from "axios";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/solid";
 import "@inertiajs/vue3";
