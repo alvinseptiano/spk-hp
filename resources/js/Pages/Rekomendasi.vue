@@ -89,7 +89,7 @@ const saveValue = async () => {
     <!-- <AuthenticatedLayout> -->
     <Head title="Rekomendasi" />
     <TopBar />
-    <div class="flex h-full max-h-[90vh] flex-col px-52">
+    <div class="flex h-screen max-h-[90vh] flex-col px-52 bg-base-300 h-full">
         <div class="mt-10">
             <h3 class="mb-4 text-center text-lg font-bold">
                 Pilih Kriteria Smartphone
