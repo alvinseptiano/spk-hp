@@ -1,288 +1,434 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router, usePage, WhenVisible } from '@inertiajs/vue3';
+import { ref, watch, nextTick, onMounted } from 'vue';
+import Modal from '@/Components/Modal.vue';
 import {
     PencilSquareIcon,
-    PlusCircleIcon,
     TrashIcon,
+    PlusCircleIcon,
+    PlusIcon,
 } from '@heroicons/vue/24/solid';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import AccentButton from '@/Components/AccentButton.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { ref } from 'vue';
+import FlashMessage from '@/Components/FlashMessage.vue';
+import axios from 'axios';
 
-// import { onMounted } from 'vue';
-const formData = ref({
-    name: '',
-    weight: null,
-});
-const loading = ref(false);
+const page = usePage();
+const modalType = ref('');
+const isModalOpen = ref(false);
+const formData = ref(null);
+const tableData = ref([]);
+const actionType = ref('');
+const showToast = ref(false);
+const toastMessage = ref('');
+const itemId = ref(0);
 
-const submitForm = async () => {
-    loading.value = true;
+const openModal = (type, action, data = null, id = null) => {
+    modalType.value = type;
+    actionType.value = action;
+    formData.value = data;
+    isModalOpen.value = true;
+    itemId.value = id;
+};
+
+const handleDelete = (type, id, name) => {
+    if (!confirm(`Yakin ingin menghapus ${name}?`)) return;
+
+    router.delete(`/${type}/${id}`, {
+        preserveScroll: true,
+        onFinish: () => {
+            loading.value = false;
+        },
+    });
+};
+
+const handleSubmit = async (formData) => {
+    await nextTick(); // Wait for all DOM and reactive updates to complete
     try {
-        const response = await axios.post('/add', formData.value);
-        document.getElementById('criteria_modal').close();
-        emit('criteria-added');
+        let response;
+        formData.type = modalType.value;
+
+        if (modalType.value == 'subcriteria') {
+            console.log('sub criteria!!');
+            response = router.post(`/addsubcriteria/${itemId.value}`, formData);
+        } else {
+            if (actionType.value == 'edit') {
+                response = router.put('/update', formData);
+            } else {
+                response = router.post('/add', formData);
+            }
+        }
+
+        isModalOpen.value = false;
+        formData.value = null;
+
+        // fetchItems;
+
+        return response;
     } catch (error) {
-        console.error('Error:', error);
-    } finally {
-        loading.value = false;
+        console.error('An error occurred while submitting the form:', error);
+        throw error;
     }
 };
-const closeModal = () => {
-    document.getElementById('alternative_modal').close();
-    document.getElementById('criteria_modal').close();
+
+// Your existing fetchItems function
+const fetchItems = async () => {
+    try {
+        const response = await axios.get(`/getdata`);
+        tableData.value = response.data.data;
+    } catch (error) {
+        console.error('Error fetching items:', error);
+    }
 };
-const emit = defineEmits(['criteria-added']);
-// onMounted(async () => {
-//     try {
-//         const response = await fetch('/getdata');
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         tableData.value = await response.json();
-//         console.log('Response:', tableData.value); // Debug log
-//     } catch (error) {
-//         console.error('Error fetching data:', error);
-//     }
-// });
+
+watch(
+    () => isModalOpen.value,
+    (isOpen) => {
+        if (!isOpen) {
+            formData.value = null;
+        }
+    },
+);
+
+watch(
+    () => page.props.flash.refresh,
+    async (newValue) => {
+        if (newValue) {
+            await fetchItems();
+            // showToast.value = true;
+            router.visit(window.location.pathname, {
+                preserveScroll: true,
+                preserveState: true,
+                replace: true,
+                // onSuccess: () => {
+                //     if (page.props.flash.message) {
+                //         toastMessage.value = page.props.flash.message;
+                //         showToast.value = true;
+                //         setTimeout(() => {
+                //             showToast.value = false;
+                //         }, 3000);
+                //     }
+                // },
+            });
+        }
+    },
+    { immediate: true },
+);
+
+onMounted(() => {
+    fetchItems();
+});
 </script>
 
 <template>
     <AuthenticatedLayout>
         <Head title="Input Data" />
-        <div role="tablist" class="tabs-boxed tabs">
-            <input
-                type="radio"
-                name="my_tabs_2"
-                role="tab"
-                class="tab"
-                aria-label="Alternatif"
-                checked="checked"
-            />
-            <div role="tabpanel" class="tab-content p-6">
-                <div class="flex flex-col gap-4">
-                    <AccentButton onclick="alternative_modal.showModal()">
-                        <PlusCircleIcon class="size-5" />
-                        Alternatif
-                    </AccentButton>
+        <FlashMessage :show="showToast" :message="toastMessage" />
+        <Modal
+            v-model="isModalOpen"
+            :title="`${formData ? 'edit' : 'add'} ${modalType}`"
+            :type="modalType"
+            :edit-data="formData"
+            @submit="handleSubmit"
+        />
 
-                    <table class="table table-zebra shadow-sm">
-                        <thead class="bg-base-300 text-center font-bold">
-                            <tr>
-                                <th class="text-center" style="width: 5%">
-                                    Alternatif
-                                </th>
-                                <th class="text-center">Nama</th>
+        <div class="">
+            <div role="tablist" class="tabs-box tabs">
+                <!-- Alternatif Section -->
+                <input
+                    type="radio"
+                    name="my_tabs_2"
+                    role="tab"
+                    class="tab"
+                    aria-label="Alternatif"
+                    checked="checked"
+                />
+                <div
+                    role="tabpanel"
+                    class="tab-content max-h-[80vh] overflow-y-auto p-4"
+                >
+                    <div class="flex flex-col gap-6">
+                        <AccentButton @click="openModal('alternative')">
+                            <PlusCircleIcon class="size-5" />
+                            Alternatif
+                        </AccentButton>
+                        <div class="">
+                            <table class="table-pin-rows table-pin-cols table">
+                                <thead
+                                    class="bg-base-300 text-center font-bold"
+                                >
+                                    <tr>
+                                        <th
+                                            class="text-center"
+                                            style="width: 5%"
+                                        >
+                                            Alternatif
+                                        </th>
+                                        <th class="text-center">Nama</th>
 
-                                <th class="text-center" style="width: 5%">
-                                    Aksi
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            <tr>
-                                <td class="text-center">A1</td>
-                                <td class="text-center">Redmi 9A</td>
-                                <td class="flex justify-center gap-2">
-                                    <button
-                                        class="btn btn-ghost btn-sm"
-                                        @click="handleDelete"
+                                        <th
+                                            class="text-center"
+                                            style="width: 5%"
+                                        >
+                                            Aksi
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr
+                                        v-for="(item, index) in tableData[
+                                            'alternative'
+                                        ]"
+                                        :key="item.id"
                                     >
-                                        <PencilSquareIcon class="size-5" />
-                                    </button>
-                                    <button
-                                        class="btn btn-ghost btn-sm"
-                                        @click="handleDelete"
-                                    >
-                                        <TrashIcon class="size-5 text-error" />
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        <td class="text-center">
+                                            A{{ index + 1 }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ item.name }}
+                                        </td>
+                                        <td class="flow-row flex">
+                                            <button
+                                                class="btn btn-ghost"
+                                                @click="
+                                                    openModal(
+                                                        'alternative',
+                                                        'edit',
+                                                        item,
+                                                    )
+                                                "
+                                            >
+                                                <PencilSquareIcon
+                                                    class="h-5 w-5"
+                                                />
+                                            </button>
+                                            <button
+                                                class="btn btn-ghost"
+                                                @click="
+                                                    handleDelete(
+                                                        'alternative',
+                                                        item.id,
+                                                        item.name,
+                                                    )
+                                                "
+                                            >
+                                                <TrashIcon
+                                                    class="text-error size-5"
+                                                />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <input
-                type="radio"
-                name="my_tabs_2"
-                role="tab"
-                class="tab"
-                aria-label="Kriteria"
-            />
-            <div role="tabpanel" class="tab-content p-10">
+
                 <!-- Kriteria Section -->
-                <div class="flex flex-col gap-4">
-                    <AccentButton onclick="criteria_modal.showModal()">
-                        <PlusCircleIcon class="size-5" />
-                        Kriteria
-                    </AccentButton>
-                    <table class="table table-zebra shadow-sm">
-                        <thead class="bg-base-300 text-center">
-                            <tr>
-                                <th class="text-center" style="width: 5%">
-                                    Kriteria
-                                </th>
-                                <th class="text-center">Nama</th>
-                                <th class="text-center">Bobot</th>
-                                <th class="text-center">Atribut</th>
-                                <th class="text-center" style="width: 5%">
-                                    Aksi
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            <tr>
-                                <td class="text-center">C1</td>
-                                <td class="text-center">Resolusi Layar</td>
-                                <td class="text-center">2.5</td>
-                                <td class="text-center">Benefit</td>
-                                <td class="flex justify-center gap-2">
-                                    <button
-                                        class="btn btn-ghost btn-sm"
-                                        @click="handleDelete"
-                                    >
-                                        <PencilSquareIcon class="size-5" />
-                                    </button>
-                                    <button
-                                        class="btn btn-ghost btn-sm"
-                                        @click="handleDelete"
-                                    >
-                                        <TrashIcon class="size-5 text-error" />
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <input
+                    type="radio"
+                    name="my_tabs_2"
+                    role="tab"
+                    class="tab"
+                    aria-label="Kriteria"
+                />
+
+                <div
+                    role="tabpanel"
+                    class="tab-content max-h-[80vh] overflow-y-auto p-4"
+                >
+                    <div class="flex flex-col gap-4">
+                        <AccentButton @click="openModal('criteria')">
+                            <PlusCircleIcon class="size-5" />
+                            Kriteria
+                        </AccentButton>
+                        <WhenVisible />
+                        <table class="table-pin-rows table-pin-cols table">
+                            <thead class="bg-base-300 text-center">
+                                <tr>
+                                    <th class="text-center" style="width: 5%">
+                                        Kriteria
+                                    </th>
+                                    <th class="text-center">Nama</th>
+                                    <th class="text-center">Bobot</th>
+                                    <th class="text-center">Atribut</th>
+                                    <th class="text-center" style="width: 5%">
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr
+                                    v-for="(item, index) in tableData[
+                                        'criteria'
+                                    ]"
+                                    :key="item.id"
+                                >
+                                    <td class="text-center">
+                                        C{{ index + 1 }}
+                                    </td>
+                                    <td class="text-center">{{ item.name }}</td>
+                                    <td class="text-center">
+                                        {{ item.weight }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ item.attribute }}
+                                    </td>
+                                    <td class="flex justify-center gap-2">
+                                        <button
+                                            class="btn btn-ghost btn-sm"
+                                            @click="
+                                                openModal(
+                                                    'criteria',
+                                                    'edit',
+                                                    item,
+                                                )
+                                            "
+                                        >
+                                            <PencilSquareIcon class="size-5" />
+                                        </button>
+                                        <button
+                                            class="btn btn-ghost"
+                                            @click="
+                                                handleDelete(
+                                                    'criteria',
+                                                    item.id,
+                                                    item.name,
+                                                )
+                                            "
+                                        >
+                                            <TrashIcon
+                                                class="text-error size-5"
+                                            />
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Sub Kriteria -->
+                <input
+                    type="radio"
+                    name="my_tabs_2"
+                    role="tab"
+                    class="tab"
+                    aria-label="Sub Kriteria"
+                />
+                <div
+                    role="tabpanel"
+                    class="tab-content max-h-[80vh] overflow-y-auto p-4"
+                >
+                    <div class="flex flex-col">
+                        <table
+                            class="table-pin-rows table-pin-cols table h-full"
+                        >
+                            <thead class="bg-base-300 text-center">
+                                <tr>
+                                    <th class="text-center" style="width: 5%">
+                                        Kriteria
+                                    </th>
+                                    <th class="text-center">Nama</th>
+                                    <th class="text-center" style="width: 10%">
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr
+                                    v-for="(item, index) in tableData[
+                                        'criteria'
+                                    ]"
+                                    :key="item.name"
+                                >
+                                    <td class="text-center">
+                                        C{{ index + 1 }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ item.name }}
+                                    </td>
+                                    <td class="flex justify-center gap-2">
+                                        <button
+                                            class="btn btn-ghost btn-sm"
+                                            @click="
+                                                openModal(
+                                                    'subcriteria',
+                                                    'edit',
+                                                    item,
+                                                    item.id,
+                                                )
+                                            "
+                                        >
+                                            <PlusIcon class="size-5" />
+                                        </button>
+                                        <button
+                                            class="btn btn-ghost btn-sm"
+                                            @click="
+                                                handleDelete(
+                                                    'criteria',
+                                                    item.id,
+                                                    item.name,
+                                                )
+                                            "
+                                        >
+                                            <TrashIcon
+                                                class="text-error size-5"
+                                            />
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table-pin-rows table-pin-cols table">
+                            <thead class="bg-base-300 text-center">
+                                <tr>
+                                    <!-- <th class="text-center" style="width: 5%">
+                                        Kriteria
+                                    </th> -->
+                                    <th class="text-center">Sub Kriteria</th>
+                                    <th class="text-center">Nilai</th>
+                                    <th class="text-center" style="width: 10%">
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr
+                                    v-for="item in tableData['subcriteria']"
+                                    :key="item.name"
+                                >
+                                    <!-- <td class="text-center">C{{ item.id }}</td> -->
+                                    <td class="text-center">
+                                        {{ item.name }}
+                                        <!-- <div class="badge">C{{ item.id }}</div> -->
+                                    </td>
+                                    <td class="text-center">
+                                        {{ item.value }}
+                                    </td>
+                                    <td class="flex justify-center gap-2">
+                                        <button
+                                            class="btn btn-ghost btn-sm"
+                                            @click="
+                                                handleDelete(
+                                                    'subcriteria',
+                                                    item.id,
+                                                    item.name,
+                                                )
+                                            "
+                                        >
+                                            <TrashIcon
+                                                class="text-error size-5"
+                                            />
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <input
-                type="radio"
-                name="my_tabs_2"
-                role="tab"
-                class="tab"
-                aria-label="Sub Kriteria"
-            />
-            <div role="tabpanel" class="tab-content p-10">
-                <div class="flex flex-col gap-4">
-                    <table class="table table-zebra shadow-sm">
-                        <thead class="bg-base-300 text-center">
-                            <tr>
-                                <th class="text-center" style="width: 5%">
-                                    Kriteria
-                                </th>
-                                <th class="text-center">Kriteria</th>
-                                <th class="text-center">Sub Kriteria</th>
-                                <th class="text-center">Nilai</th>
-                                <th class="text-center" style="width: 5%">
-                                    Aksi
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            <tr>
-                                <td class="text-center">C1</td>
-                                <td class="text-center">Resolusi Layar</td>
-                                <td class="text-center">FHD</td>
-                                <td class="text-center">50</td>
-                                <td class="flex justify-center gap-2">
-                                    <button
-                                        class="btn btn-ghost btn-sm"
-                                        @click="handleDelete"
-                                    >
-                                        <PencilSquareIcon class="size-5" />
-                                    </button>
-                                    <button
-                                        class="btn btn-ghost btn-sm"
-                                        @click="handleDelete"
-                                    >
-                                        <TrashIcon class="size-5 text-error" />
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- End Alternatif Section -->
         </div>
-        <!-- Alternatif Section -->
-
-        <!-- Modal alternatif-->
-        <dialog id="alternative_modal" class="modal">
-            <div class="modal-box">
-                <h3 class="text-lg font-bold">Tambah Alternatif</h3>
-
-                <div class="modal-action">
-                    <form method="dialog">
-                        <button
-                            class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-                        >
-                            ✕
-                        </button>
-                        <div class="w-full">
-                            <div class="flex flex-col gap-2">
-                                <label for="passphrase">Bobot</label>
-                                <input
-                                    class="input input-bordered"
-                                    id="passphrase"
-                                    type="text"
-                                    placeholder=""
-                                />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="passphrase">Bobot</label>
-                                <input
-                                    class="input input-bordered"
-                                    id="passphrase"
-                                    type="text"
-                                    placeholder=""
-                                />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </dialog>
-
-        <!-- Modal kriteria -->
-        <dialog id="criteria_modal" class="modal">
-            <div class="modal-box">
-                <h3 class="text-lg font-bold">Tambah Kriteria</h3>
-                <div class="modal-action">
-                    <form @submit.prevent="submitForm">
-                        <button
-                            class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-                            type="button"
-                            @click="closeModal"
-                        >
-                            ✕
-                        </button>
-                        <div class="flex flex-col gap-4">
-                            <div class="flex flex-col gap-2">
-                                <label for="alternative_name">Nama</label>
-                                <input
-                                    v-model="formData.name"
-                                    class="input input-bordered"
-                                    id="alternative_name"
-                                    type="text"
-                                />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="alternative_weight">Bobot</label>
-                                <input
-                                    v-model="formData.weight"
-                                    class="input input-bordered"
-                                    id="alternative_weight"
-                                    type="number"
-                                />
-                            </div>
-                            <PrimaryButton :loading="loading"
-                                >Proses</PrimaryButton
-                            >
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </dialog>
     </AuthenticatedLayout>
 </template>

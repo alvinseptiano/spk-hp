@@ -9,9 +9,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('alternatives', function (Blueprint $table) {
-            $table->id('alternative_id');
+            $table->id();
             $table->string('name');
-            $table->text('description');
             $table->timestamps();
         });
     }

@@ -343,7 +343,7 @@ const k = { install(t4, e2) {
   const r2 = (t5, r3, n2, o2 = e2) => T(t5, r3, n2, o2);
   parseInt(t4.version) > 2 ? (t4.config.globalProperties.route = r2, t4.provide("route", r2)) : t4.mixin({ methods: { route: r2 } });
 } };
-const appName = "Encrypt_it";
+const appName = "Laravel";
 createServer(
   (page) => createInertiaApp({
     page,
@@ -351,7 +351,7 @@ createServer(
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(
       `./Pages/${name}.vue`,
-      /* @__PURE__ */ Object.assign({ "./Pages/Auth/ConfirmPassword.vue": () => import("./assets/ConfirmPassword-BnABoIC3.js"), "./Pages/Auth/ForgotPassword.vue": () => import("./assets/ForgotPassword-DKhWbEEb.js"), "./Pages/Auth/Login.vue": () => import("./assets/Login-BMzno4i3.js"), "./Pages/Auth/Register.vue": () => import("./assets/Register-twjD4M23.js"), "./Pages/Auth/ResetPassword.vue": () => import("./assets/ResetPassword-CP54SaLM.js"), "./Pages/Auth/VerifyEmail.vue": () => import("./assets/VerifyEmail-BtSnXDzE.js"), "./Pages/DataForm.vue": () => import("./assets/DataForm-9q6rJa9G.js"), "./Pages/Home.vue": () => import("./assets/Home-f4RiSY5f.js"), "./Pages/Matrix.vue": () => import("./assets/Matrix-DBvl1W6h.js"), "./Pages/MyFiles.vue": () => import("./assets/MyFiles-D72Z0STa.js"), "./Pages/Preferensi.vue": () => import("./assets/Preferensi-XqoAySEG.js"), "./Pages/Profile/Edit.vue": () => import("./assets/Edit-CnRtMXMH.js"), "./Pages/Profile/Partials/DeleteUserForm.vue": () => import("./assets/DeleteUserForm-B38YoOam.js"), "./Pages/Profile/Partials/UpdatePasswordForm.vue": () => import("./assets/UpdatePasswordForm-BA44kQFq.js"), "./Pages/Profile/Partials/UpdateProfileInformationForm.vue": () => import("./assets/UpdateProfileInformationForm-OFa5CY3_.js"), "./Pages/Rekomendasi.vue": () => import("./assets/Rekomendasi-Bq0NwJ9R.js"), "./Pages/Welcome.vue": () => import("./assets/Welcome-DMaBece4.js") })
+      /* @__PURE__ */ Object.assign({ "./Pages/Auth/ConfirmPassword.vue": () => import("./assets/ConfirmPassword-BnABoIC3.js"), "./Pages/Auth/ForgotPassword.vue": () => import("./assets/ForgotPassword-DKhWbEEb.js"), "./Pages/Auth/Login.vue": () => import("./assets/Login-BUn25ig1.js"), "./Pages/Auth/Register.vue": () => import("./assets/Register-twjD4M23.js"), "./Pages/Auth/ResetPassword.vue": () => import("./assets/ResetPassword-CP54SaLM.js"), "./Pages/Auth/VerifyEmail.vue": () => import("./assets/VerifyEmail-BtSnXDzE.js"), "./Pages/DataForm.vue": () => import("./assets/DataForm-qPE4qcG5.js"), "./Pages/Home.vue": () => import("./assets/Home-U12xCftO.js"), "./Pages/Matrix.vue": () => import("./assets/Matrix-Be_ubLd1.js"), "./Pages/MyFiles.vue": () => import("./assets/MyFiles-DNlDNrda.js"), "./Pages/Preferensi.vue": () => import("./assets/Preferensi-MdTgE0k-.js"), "./Pages/Profile/Edit.vue": () => import("./assets/Edit-L5yRTCDa.js"), "./Pages/Profile/Partials/DeleteUserForm.vue": () => import("./assets/DeleteUserForm-C9CvEmAc.js"), "./Pages/Profile/Partials/UpdatePasswordForm.vue": () => import("./assets/UpdatePasswordForm-BA44kQFq.js"), "./Pages/Profile/Partials/UpdateProfileInformationForm.vue": () => import("./assets/UpdateProfileInformationForm-OFa5CY3_.js"), "./Pages/Rekomendasi.vue": () => import("./assets/Rekomendasi-zzsH8PW1.js"), "./Pages/Welcome.vue": () => import("./assets/Welcome-DMaBece4.js") })
     ),
     setup({ App, props, plugin }) {
       return createSSRApp({ render: () => h$1(App, props) }).use(plugin).use(k, {

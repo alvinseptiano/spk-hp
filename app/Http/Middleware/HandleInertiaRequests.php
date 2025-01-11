@@ -35,15 +35,13 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'ziggy' => fn () => [
+            'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
-            'csrf_token' => csrf_token(), 
-            'auth.user' => fn () => $request->user()?->only('id', 'name', 'email'),
-            'appName' => config('app.name'),
             'flash' => [
-                'message' => fn () => $request->session()->get('message')
+                'message' => fn() => $request->session()->get('message'),
+                'refresh' => fn() => $request->session()->get('refresh')
             ],
         ];
     }

@@ -9,11 +9,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('criterias', function (Blueprint $table) {
-            $table->id('criteria_id');
+            $table->id();
             $table->string('name');
-            $table->string('description');
             $table->float('weight');
-            $table->enum('type', ['cost', 'benefit']);
+            $table->string('attribute');
             $table->timestamps();
         });
     }

@@ -1,123 +1,150 @@
+<!-- Modal.vue -->
 <script setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { reactive, watch } from 'vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const props = defineProps({
-    show: {
-        type: Boolean,
-        default: false,
-    },
-    maxWidth: {
-        type: String,
-        default: '2xl',
-    },
-    closeable: {
-        type: Boolean,
-        default: true,
+    modelValue: Boolean,
+    title: String,
+    type: String, // 'criteria' or 'alternative'
+    editData: {
+        type: Object,
+        default: null,
     },
 });
 
-const emit = defineEmits(['close']);
-const dialog = ref();
-const showSlot = ref(props.show);
+const emit = defineEmits(['update:modelValue', 'submit']);
 
+const form = reactive({
+    type: props.type,
+    data: {
+        name: '',
+        weight: '',
+        attribute: '',
+        value: '',
+    },
+});
+
+const handleSubmit = () => {
+    emit('submit', {
+        ...form,
+        type: form.type,
+        // id: props.editData?.id, // Include ID if editing
+    });
+    emit('update:modelValue', false);
+};
+
+// Watch for editData changes to fill the form
 watch(
-    () => props.show,
-    () => {
-        if (props.show) {
-            document.body.style.overflow = 'hidden';
-            showSlot.value = true;
+    () => props.editData,
+    (newVal) => {
+        if (newVal) {
+            form.data = { ...newVal };
+        }
+    },
+    { immediate: true },
+);
 
-            dialog.value?.showModal();
-        } else {
-            document.body.style.overflow = '';
-
-            setTimeout(() => {
-                dialog.value?.close();
-                showSlot.value = false;
-            }, 200);
+// Reset form when modal closes
+watch(
+    () => props.modelValue,
+    (newVal) => {
+        if (!newVal && !props.editData) {
+            form.data.name = '';
+            form.data.weight = '';
+            form.data.attribute = '';
         }
     },
 );
-
-const close = () => {
-    if (props.closeable) {
-        emit('close');
-    }
-};
-
-const closeOnEscape = (e) => {
-    if (e.key === 'Escape') {
-        e.preventDefault();
-
-        if (props.show) {
-            close();
-        }
-    }
-};
-
-onMounted(() => document.addEventListener('keydown', closeOnEscape));
-
-onUnmounted(() => {
-    document.removeEventListener('keydown', closeOnEscape);
-
-    document.body.style.overflow = '';
-});
-
-const maxWidthClass = computed(() => {
-    return {
-        sm: 'sm:max-w-sm',
-        md: 'sm:max-w-md',
-        lg: 'sm:max-w-lg',
-        xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
-    }[props.maxWidth];
-});
 </script>
 
 <template>
     <dialog
-        class="z-50 m-0 min-h-full min-w-full overflow-y-auto bg-transparent backdrop:bg-transparent"
-        ref="dialog"
+        class="modal"
+        :open="modelValue"
+        @close="$emit('update:modelValue', false)"
     >
-        <div
-            class="fixed inset-0 z-50 overflow-y-auto px-4 py-6 sm:px-0"
-            scroll-region
-        >
-            <Transition
-                enter-active-class="ease-out duration-300"
-                enter-from-class="opacity-0"
-                enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-200"
-                leave-from-class="opacity-100"
-                leave-to-class="opacity-0"
+        <div class="modal-box relative max-w-64">
+            <h3 v-mode="form.type" class="text-lg font-bold">{{ title }}</h3>
+            <button
+                class="btn btn-circle btn-ghost btn-sm absolute top-2 right-2"
+                type="button"
+                @click="$emit('update:modelValue', false)"
             >
-                <div
-                    v-show="show"
-                    class="fixed inset-0 transform transition-all"
-                    @click="close"
-                >
-                    <div
-                        class="absolute inset-0 bg-gray-500 opacity-75 dark:bg-gray-900"
+                ✕
+            </button>
+
+            <form @submit.prevent="handleSubmit" class="mt-4 space-y-4">
+                <!-- Name field - always shown -->
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Name</span>
+                    </label>
+                    <input
+                        v-model="form.data.name"
+                        type="text"
+                        class="input input-bordered w-full"
+                        required
                     />
                 </div>
-            </Transition>
 
-            <Transition
-                enter-active-class="ease-out duration-300"
-                enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enter-to-class="opacity-100 translate-y-0 sm:scale-100"
-                leave-active-class="ease-in duration-200"
-                leave-from-class="opacity-100 translate-y-0 sm:scale-100"
-                leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-                <div
-                    v-show="show"
-                    class="mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full dark:bg-gray-800"
-                    :class="maxWidthClass"
-                >
-                    <slot v-if="showSlot" />
+                <!-- Criteria-specific fields -->
+                <template v-if="type === 'criteria'">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Weight</span>
+                        </label>
+                        <input
+                            v-model="form.data.weight"
+                            type="number"
+                            step="0.01"
+                            class="input input-bordered w-full"
+                            required
+                        />
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Attribute</span>
+                        </label>
+                        <select class="select" v-model="form.data.attribute">
+                            <option disabled selected>Pick a color</option>
+                            <option value="cost">Cost</option>
+                            <option value="benefit">Benefit</option>
+                        </select>
+                    </div>
+                </template>
+
+                <template v-else-if="type === 'subcriteria'">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Nilai</span>
+                        </label>
+                        <input
+                            v-model="form.data.value"
+                            type="number"
+                            step="0.01"
+                            class="input input-bordered w-full"
+                            required
+                        />
+                    </div>
+
+                    <!-- <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Attribute</span>
+                        </label>
+                        <select class="select" v-model="form.data.attribute">
+                            <option disabled selected>Pick a color</option>
+                            <option value="cost">Cost</option>
+                            <option value="benefit">Benefit</option>
+                        </select>
+                    </div> -->
+                </template>
+
+                <div class="modal-action">
+                    <PrimaryButton type="submit"> Proses </PrimaryButton>
                 </div>
-            </Transition>
+            </form>
         </div>
     </dialog>
 </template>

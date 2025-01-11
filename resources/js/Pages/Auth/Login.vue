@@ -36,15 +36,12 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Log in" />
-        <div v-if="$page.props.flash.message" class="alert">
-            {{ $page.props.flash.message }}
-        </div>
         <div v-if="status" class="mb-4 text-sm font-medium">
             {{ status }}
         </div>
 
-        <div class="flex justify-center bg-base-100">
-            <div class="mx-64 mt-20 min-w-96 rounded-xl p-4 outline outline-2">
+        <div class="bg-base-100 flex justify-center">
+            <div class="mx-64 mt-20 min-w-96 rounded-xl p-4 outline-2">
                 <h1 class="text-center text-3xl font-extrabold">Sign in</h1>
                 <form @submit.prevent="submit">
                     <div>
@@ -82,14 +79,14 @@ const submit = () => {
                     </div>
 
                     <!-- Login error -->
-                    <div class="mt-4 block">
+                    <!-- <div class="mt-4 block">
                         <div role="alert" class="alert">
                             <ExclamationTriangleIcon
-                                class="h-5 w-5 text-warning"
+                                class="text-warning h-5 w-5"
                             />
                             <span>Gagal Login: Page Expire</span>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="mt-4 block">
                         <label class="flex items-center">
@@ -100,6 +97,7 @@ const submit = () => {
                             <span class="ms-2 text-sm">Remember me</span>
                         </label>
                     </div>
+
                     <div class="mt-16 block">
                         <div class="flex items-center justify-between">
                             <div class="flex flex-col items-start gap-3">

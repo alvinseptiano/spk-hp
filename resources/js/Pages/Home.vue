@@ -1,98 +1,39 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref, onMounted, watch } from 'vue';
-import { Line } from 'vue-chartjs';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-);
-
-const currentTheme = ref(localStorage.getItem('theme') || 'nord');
-
-const chartData = ref({
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-    datasets: [
-        {
-            label: 'Sample Data',
-            backgroundColor: 'rgba(147, 51, 234, 0.2)', // Solid purple with opacity
-            borderColor: '#9333EA', // Solid purple
-            borderWidth: 2,
-            tension: 0.4,
-            data: [40, 20, 12, 39, 10, 30],
-        },
-    ],
-});
-
-const chartOptions = ref({
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            labels: {
-                color: '#1F2937', // Dark gray for text
-            },
-        },
-    },
-    scales: {
-        x: {
-            grid: {
-                color: 'rgba(31, 41, 55, 0.1)', // Dark gray with opacity for grid
-            },
-            ticks: {
-                color: '#1F2937', // Dark gray for text
-            },
-        },
-        y: {
-            grid: {
-                color: 'rgba(31, 41, 55, 0.1)', // Dark gray with opacity for grid
-            },
-            ticks: {
-                color: '#1F2937', // Dark gray for text
-            },
-        },
-    },
-});
-
-// Update chart when theme changes
-watch(
-    () => localStorage.getItem('theme'),
-    (newTheme) => {
-        if (newTheme !== currentTheme.value) {
-            currentTheme.value = newTheme;
-            chartData.value = { ...chartData.value };
-        }
-    },
-);
-
-onMounted(() => {
-    chartData.value = { ...chartData.value };
-});
+import { Link as InertiaLink } from '@inertiajs/vue3';
+import TopBar from '@/Components/TopBar.vue';
 </script>
 
 <template>
-    <AuthenticatedLayout>
-        <Head title="Dashboard" />
-        <div class="mt-6 flex flex-col gap-4">
-            <div class="chart-container w-full justify-center">
-                <Line :data="chartData" :options="chartOptions" />
+    <Head title="Dashboard" />
+    <TopBar />
+    <div class="hero bg-base-200 flex h-screen justify-center">
+        <div class="hero-content text-center">
+            <div class="max-w-md">
+                <h1 class="text-5xl font-bold">
+                    Sistem Pendukung Keputusan SAW Smartphone
+                </h1>
+                <p class="py-6">
+                    Didalam sistem ini digunakan algoritma SAW atau yang bisa
+                    disingkat dengan <i>Simple Addition Weighting</i>
+                </p>
+                <div class="flex justify-center gap-2">
+                    <InertiaLink href="/inputdata"
+                        ><button class="btn btn-info">
+                            Admin panel
+                        </button></InertiaLink
+                    >
+                    <InertiaLink href="/rekomendasi">
+                        <button class="btn btn-primary">
+                            Rekomendasikan Smartphone
+                        </button>
+                    </InertiaLink>
+                </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </div>
+    <div>
+        <InertiaLink href="/inputdata"
+            ><span class="text-3xl">admin</span></InertiaLink
+        >
+    </div>
 </template>

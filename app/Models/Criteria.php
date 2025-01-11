@@ -7,21 +7,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Criteria extends Model
 {
+    protected $table = 'criterias';
+
     protected $fillable = [
         'name',
-        'description',
         'weight',
-        'type'
+        'attribute'
     ];
 
-    public function alternativeScores(): HasMany
+    public function subcriteria(): HasMany
     {
-        return $this->hasMany(AlternativeScore::class);
+        return $this->hasMany(SubCriteria::class);
     }
 
-    public function alternatives()
+    protected static function boot()
     {
-        return $this->belongsToMany(Alternative::class, 'alternative_scores')
-            ->withPivot('score');
+        parent::boot();
+
+        // Add a model event for deleting
+        static::deleting(function ($criteria) {
+            // Delete all related orders
+            $criteria->subcriteria()->delete();
+        });
     }
 }

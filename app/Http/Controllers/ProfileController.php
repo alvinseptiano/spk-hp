@@ -4,21 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Http\Requests\Auth\LoginRequest;
 
 class ProfileController extends Controller
 {
-    public function get() {
-        return response()->json([
-            'username' => Auth::user()->name]);
-    }
     /**
      * Display the user's profile form.
      */
@@ -65,29 +59,5 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
-    }
-
-    public function login(LoginRequest $request)
-    {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        if (! $request->expectsJson()) {
-            return redirect()->intended('/dashboard');
-        }
-    }
-
-    public function logout(Request $request)
-    {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        if (! $request->expectsJson()) {
-            return redirect('/login');
-        }
     }
 }

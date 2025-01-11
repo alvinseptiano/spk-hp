@@ -55,7 +55,7 @@ onMounted(() => {
                 </div>
                 <ul
                     tabindex="0"
-                    class="menu dropdown-content z-[1] mt-3 w-52 rounded-box bg-base-100 p-2"
+                    class="menu dropdown-content rounded-box bg-base-100 z-[1] mt-3 w-52 p-2"
                 >
                     <li>
                         <button onclick="about_modal.showModal()">About</button>
@@ -65,7 +65,7 @@ onMounted(() => {
         </div>
 
         <div class="navbar-center">
-            <a href="/dashboard" class="btn btn-ghost text-xl">Encrypt it</a>
+            <a href="/dashboard" class="btn btn-ghost text-xl">SPK HP</a>
         </div>
 
         <div class="navbar-end">
@@ -75,7 +75,7 @@ onMounted(() => {
                 </div>
                 <ul
                     tabindex="0"
-                    class="menu dropdown-content z-[1] mt-4 w-52 rounded-box bg-base-100 p-2"
+                    class="menu dropdown-content rounded-box bg-base-100 z-[1] mt-4 w-52 p-2"
                 >
                     <li>
                         <form @submit.prevent="logout">

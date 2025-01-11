@@ -1,5 +1,6 @@
 <script setup>
 import { Link as InertiaLink } from '@inertiajs/vue3';
+
 defineProps({
     icon: {
         type: Object,
@@ -28,7 +29,7 @@ const isActive = (path) => {
         >
             <div
                 v-if="isActive(`/${link}`)"
-                class="absolute left-0 top-0 h-full w-1 bg-primary"
+                class="bg-primary absolute top-0 left-0 h-full w-1"
             ></div>
             <component
                 :is="icon"

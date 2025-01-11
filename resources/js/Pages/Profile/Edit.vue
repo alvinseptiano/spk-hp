@@ -21,7 +21,7 @@ defineProps({
     <AuthenticatedLayout>
         <div class="mt-6 flex flex-col gap-4">
             <h2 class="divider text-xl font-bold">Akun</h2>
-            <div class="flex h-full flex-col overflow-auto">
+            <div class="relative overflow-auto">
                 <UpdateProfileInformationForm
                     :must-verify-email="mustVerifyEmail"
                     :status="status"

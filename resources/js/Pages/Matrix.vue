@@ -1,126 +1,192 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { ref, onMounted } from 'vue';
 import { Head } from '@inertiajs/vue3';
-import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/solid';
-// Refs
-const tableData = ref([]);
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import FlashMessage from '@/Components/FlashMessage.vue';
+import axios from 'axios';
 
-// Lifecycle
+const tableData = ref({}); // Initialize as an empty object
+const selectedAlternative = ref(null);
+const selectedCriterion = ref(null);
+const selectedValue = ref('');
+const values = ref({});
+
+const scoreData = ref([]);
+const criteriaData = ref([]);
+const alternativeData = ref([]);
+const subcriteriaData = ref([]);
+
 onMounted(async () => {
     try {
-        const response = await fetch('/getsmartphone');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        tableData.value = await response.json();
-        console.log('Response:', tableData.value); // Debug log
+        await fetchItems();
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching items:', error);
     }
 });
+
+const getSubcriteria = (criterionId) => {
+    return subcriteriaData.value.filter(
+        (sub) => sub.criteria_id === criterionId,
+    );
+};
+
+const getValue = (alternativeId, criteriaId) => {
+    const score = scoreData.value.find(
+        (s) =>
+            s.alternative_id === alternativeId && s.criteria_id === criteriaId,
+    );
+    return score ? score.value : 'ss';
+};
+
+const openModal = (alternative, criterion) => {
+    selectedAlternative.value = alternative;
+    selectedCriterion.value = criterion;
+    selectedValue.value = getValue(alternative.id, criterion.id) || '';
+    document.getElementById('criterion_modal').showModal();
+};
+
+const closeModal = () => {
+    document.getElementById('criterion_modal').close();
+    resetModal();
+};
+
+const resetModal = () => {
+    selectedAlternative.value = null;
+    selectedCriterion.value = null;
+    selectedValue.value = '';
+};
+
+const saveValue = async () => {
+    if (!selectedAlternative.value || !selectedCriterion.value) return;
+
+    if (!values.value[selectedAlternative.value.id]) {
+        values.value[selectedAlternative.value.id] = {};
+    }
+
+    values.value[selectedAlternative.value.id][selectedCriterion.value.id] =
+        selectedValue.value;
+
+    try {
+        await axios.post('/addscore', {
+            alternative_id: selectedAlternative.value.id,
+            criteria_id: selectedCriterion.value.id,
+            value: selectedValue.value,
+        });
+
+        // Refresh table data
+        await fetchItems();
+        closeModal();
+    } catch (error) {
+        console.error('Error saving value:', error);
+    }
+};
+
+const fetchItems = async () => {
+    try {
+        const dataResponse = await axios.get('/getdata');
+
+        tableData.value = dataResponse.data.data;
+        criteriaData.value = tableData.value.criteria;
+        alternativeData.value = tableData.value.alternative;
+        subcriteriaData.value = tableData.value.subcriteria;
+        scoreData.value = tableData.value.score;
+    } catch (error) {
+        console.error('Error fetching items:', error);
+    }
+};
 </script>
 
 <template>
     <AuthenticatedLayout>
-        <Head title="Data Matrik" />
-        <div class="flex flex-col gap-4">
-            <div class="relative h-[calc(100vh-100px)] overflow-auto">
-                <table class="table table-pin-cols table-xs w-full">
-                    <thead>
-                        <tr>
-                            <th
-                                class="py-3 text-left text-xs font-medium uppercase"
-                            >
-                                Nama
-                            </th>
-                            <th
-                                class="py-3 text-left text-xs font-medium uppercase"
-                            >
-                                Harga
-                            </th>
-                            <th
-                                class="py-3 text-left text-xs font-medium uppercase"
-                            >
-                                Prosesor
-                            </th>
-                            <th
-                                class="py-3 text-left text-xs font-medium uppercase"
-                            >
-                                RAM
-                            </th>
-                            <th
-                                class="py-3 text-left text-xs font-medium uppercase"
-                            >
-                                Internal
-                            </th>
-                            <th
-                                class="py-3 text-left text-xs font-medium uppercase"
-                            >
-                                Resolusi
-                            </th>
-                            <th
-                                class="py-3 text-left text-xs font-medium uppercase"
-                            >
-                                Baterai
-                            </th>
-                            <th
-                                class="py-3 text-left text-xs font-medium uppercase"
-                            >
-                                Aksi
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            v-for="item in tableData"
-                            :key="item.id_hp"
-                            class="hover bg-base-200"
+        <Head title="Preferensi" />
+        <FlashMessage :show="showToast" :message="toastMessage" />
+        <div>
+            <table class="table-pin-cols table w-full">
+                <thead class="bg-base-300 text-center font-bold">
+                    <tr>
+                        <th class="text-center" style="width: 5%">
+                            Alternatif
+                        </th>
+                        <th class="text-center">Nama</th>
+                        <th
+                            v-for="criterion in criteriaData"
+                            :key="criterion.id"
+                            class="text-center"
                         >
-                            <th class="py-4 text-sm">
-                                {{ item.name }}
-                            </th>
-                            <th class="py-4 text-sm">
+                            {{ criterion.name }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="(item, index) in alternativeData"
+                        :key="item.id"
+                        class="hover bg-base-200"
+                    >
+                        <td class="text-center">A{{ index + 1 }}</td>
+                        <td class="text-center">{{ item.name }}</td>
+                        <td
+                            v-for="criterion in criteriaData"
+                            :key="criterion.id"
+                            class="cursor-pointer text-center"
+                            @click="openModal(item, criterion)"
+                        >
+                            <div
+                                :class="{
+                                    'text-red-500': !getValue(
+                                        item.id,
+                                        criterion.id,
+                                    ),
+                                }"
+                            >
                                 {{
-                                    new Intl.NumberFormat('id-ID', {
-                                        style: 'currency',
-                                        currency: 'IDR',
-                                    }).format(item.price)
+                                    getSubcriteria(criterion.id).find(
+                                        (sub) =>
+                                            sub.value ===
+                                            getValue(item.id, criterion.id),
+                                    )?.name || 'pilih'
                                 }}
-                            </th>
-                            <th class="py-4 text-sm">
-                                {{ item.processor }}
-                            </th>
-                            <th class="py-4 text-sm">
-                                {{ item.ram }}
-                            </th>
-                            <th class="py-4 text-sm">
-                                {{ item.camera }}
-                            </th>
-                            <th class="py-4 text-sm">
-                                {{ item.screen }}
-                            </th>
-                            <th class="py-4 text-sm">
-                                {{ item.battery }}
-                            </th>
-                            <th class="py-4 text-sm">
-                                <button
-                                    class="btn btn-ghost btn-sm"
-                                    @click="handleDelete"
-                                >
-                                    <PencilSquareIcon class="size-5" />
-                                </button>
-                                <button
-                                    class="btn btn-ghost btn-sm"
-                                    @click="handleDelete"
-                                >
-                                    <TrashIcon class="size-5 text-error" />
-                                </button>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Modal -->
+            <dialog id="criterion_modal" class="modal">
+                <div class="modal-box">
+                    <h3 class="text-lg font-bold">
+                        Set {{ selectedCriterion?.name }} for
+                        {{ selectedAlternative?.name }}
+                    </h3>
+                    <div class="py-4">
+                        <select
+                            v-model="selectedValue"
+                            class="select select-bordered w-full"
+                        >
+                            <option value="" disabled>Select a value</option>
+                            <option
+                                v-for="sub in getSubcriteria(
+                                    selectedCriterion?.id,
+                                )"
+                                :key="sub.id"
+                                :value="sub.value"
+                            >
+                                {{ sub.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="modal-action">
+                        <button class="btn" @click="closeModal">Cancel</button>
+                        <button class="btn btn-primary" @click="saveValue">
+                            Save
+                        </button>
+                    </div>
+                </div>
+                <form method="dialog" class="modal-backdrop">
+                    <button>close</button>
+                </form>
+            </dialog>
         </div>
     </AuthenticatedLayout>
 </template>

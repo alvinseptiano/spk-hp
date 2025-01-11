@@ -6,19 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+    public function up()
     {
-        Schema::create('subcriterias', function (Blueprint $table) {
+        Schema::create('scores', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('alternative_id')->constrained('alternatives')->onDelete('cascade');
             $table->foreignId('criteria_id')->constrained('criterias')->onDelete('cascade');
-            $table->string('name');
             $table->float('value');
             $table->timestamps();
         });
     }
 
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('subcriterias');
+        Schema::dropIfExists('scores');
     }
 };
