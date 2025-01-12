@@ -152,6 +152,55 @@ const fetchItems = async () => {
                 </tbody>
             </table>
 
+            <table class="table-pin-cols table w-full">
+                <thead class="bg-base-300 text-center font-bold">
+                    <tr>
+                        <th class="text-center" style="width: 5%">
+                            Alternatif
+                        </th>
+                        <th
+                            v-for="(criterion, index) in criteriaData"
+                            :key="criterion.id"
+                            class="text-center"
+                        >
+                            C{{ index + 1 }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="(item, index) in alternativeData"
+                        :key="item.id"
+                        class="hover bg-base-200"
+                    >
+                        <td class="text-center">A{{ index + 1 }}</td>
+                        <td
+                            v-for="criterion in criteriaData"
+                            :key="criterion.id"
+                            class="cursor-pointer text-center"
+                            @click="openModal(item, criterion)"
+                        >
+                            <div
+                                :class="{
+                                    'text-red-500': !getValue(
+                                        item.id,
+                                        criterion.id,
+                                    ),
+                                }"
+                            >
+                                {{
+                                    getSubcriteria(criterion.id).find(
+                                        (sub) =>
+                                            sub.value ===
+                                            getValue(item.id, criterion.id),
+                                    )?.value || '-'
+                                }}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <!-- Modal -->
             <dialog id="criterion_modal" class="modal">
                 <div class="modal-box">

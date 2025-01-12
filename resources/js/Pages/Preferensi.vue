@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const tableData = ref([]);
 const selectedMethod = ref('Metode SAW'); // Default to SAW
@@ -23,19 +23,100 @@ const fetchItems = async () => {
 const handleMethodChange = () => {
     fetchItems();
 };
+
+onMounted(async () => {
+    handleMethodChange();
+});
 </script>
 
 <template>
     <AuthenticatedLayout>
         <Head title="Preferensi" />
-        <select
-            class="select select-bordered mb-4 w-40"
-            v-model="selectedMethod"
-            @change="handleMethodChange"
-        >
-            <option>Metode SAW</option>
-            <option>Metode WP</option>
-        </select>
+        <div class="flex overflow-auto">
+            <table class="table-pin-cols table">
+                <thead class="bg-base-300 text-center text-lg font-bold">
+                    <tr>
+                        <th style="width: 25%">Alternatif</th>
+                        <!-- Dynamically generate column headings -->
+                        <th
+                            v-for="(value, key) in tableData['matrix'][1]"
+                            :key="key"
+                            class="text-center"
+                        >
+                            C{{ key }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr
+                        v-for="(item, index) in tableData['weighted']"
+                        :key="index"
+                    >
+                        <td>A{{ index }}</td>
+                        <td v-for="(child, key) in item" :key="key">
+                            {{ parseFloat(child).toFixed(3) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex overflow-auto">
+            <table class="table-pin-cols table">
+                <thead class="bg-base-300 text-center text-lg font-bold">
+                    <tr>
+                        <th style="width: 25%">Alternatif</th>
+                        <!-- Dynamically generate column headings -->
+                        <th
+                            v-for="(value, key) in tableData['matrix'][1]"
+                            :key="key"
+                            class="text-center"
+                        >
+                            C{{ key }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr
+                        v-for="(item, index) in tableData['matrix']"
+                        :key="index"
+                    >
+                        <td>A{{ index }}</td>
+                        <td v-for="(child, key) in item" :key="key">
+                            {{ child }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex overflow-auto">
+            <table class="table-pin-cols table">
+                <thead class="bg-base-300 text-center text-lg font-bold">
+                    <tr>
+                        <th style="width: 25%">Alternatif</th>
+                        <!-- Dynamically generate column headings -->
+                        <th
+                            v-for="(value, key) in tableData['matrix'][1]"
+                            :key="key"
+                            class="text-center"
+                        >
+                            C{{ key }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr
+                        v-for="(item, index) in tableData['normalization']"
+                        :key="index"
+                    >
+                        <td>A{{ index }}</td>
+                        <td v-for="(child, key) in item" :key="key">
+                            {{ parseFloat(child).toFixed(3) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <div class="flex overflow-auto">
             <table class="table-pin-cols table">
                 <thead class="bg-base-300 text-center text-lg font-bold">
