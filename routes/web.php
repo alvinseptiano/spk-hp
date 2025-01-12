@@ -25,6 +25,10 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('homepage');
 
+Route::get('/home', function () {
+    return Inertia::render('Home');
+})->name('homepage');
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Home');
