@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\SawService;
+use App\Services\SAWService;
 use Illuminate\Http\Request;
 
-class DssController extends Controller
+class SAWController extends Controller
 {
     protected $sawService;
 
-    public function __construct(SawService $sawService)
+    public function __construct(SAWService $sawService)
     {
         $this->sawService = $sawService;
     }

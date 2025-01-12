@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\DssController;
+use App\Http\Controllers\WPController;
+use App\Http\Controllers\SAWController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,8 +32,6 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Home');
     })->name('dashboard');
 
-
-
     Route::get('/inputdata', function () {
         return Inertia::render('DataForm');
     })->name('inputdata');
@@ -56,7 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/addscore', [SmartphoneController::class, 'addScore']);
     Route::get('/getscore', [SmartphoneController::class, 'getScore']);
 
-    Route::get('/saw/calculate', [DssController::class, 'calculate'])->name('saw.calculate');
+    Route::get('/saw/calculate', [SAWController::class, 'calculate'])->name('saw.calculate');
+    Route::get('/wp/calculate', [WPController::class, 'calculate'])->name('wp.calculate');
 
     // Profile
     Route::get('/username', [ProfileController::class, 'get']);
