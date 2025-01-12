@@ -70,13 +70,13 @@ watch(isOpen, (newValue) => {
                             />
                             <MenuItem
                                 :icon="TableCellsIcon"
-                                :name="`Matrik`"
+                                :name="`List HP`"
                                 :link="`matrix`"
                                 :isOpen="isOpen"
                             />
                             <MenuItem
                                 :icon="ChartBarIcon"
-                                :name="`Nilai Preferensi`"
+                                :name="`Matriks`"
                                 :link="`preferensi`"
                                 :isOpen="isOpen"
                             />
