@@ -6,7 +6,6 @@ import {
     MoonIcon,
     ExclamationCircleIcon,
 } from '@heroicons/vue/24/solid';
-const user = usePage().props.auth.user;
 const page = usePage();
 
 const logout = () => {

@@ -1,10 +1,11 @@
 <script setup>
 import { Link as InertiaLink } from '@inertiajs/vue3';
 import TopBar from '@/Components/TopBar.vue';
+import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Homepage" />
     <TopBar />
     <div class="hero bg-base-300 flex h-screen justify-center">
         <div class="hero-content text-center">
@@ -14,7 +15,7 @@ import TopBar from '@/Components/TopBar.vue';
                 </h1>
                 <p class="py-6">
                     Didalam sistem ini digunakan algoritma SAW atau yang bisa
-                    disingkat dengan <i>Simple Addition Weighting</i>
+                    disingkat dengan <i>Simple Additive Weighting</i>
                 </p>
                 <div class="flex justify-center gap-2">
                     <InertiaLink href="/inputdata"
@@ -30,10 +31,5 @@ import TopBar from '@/Components/TopBar.vue';
                 </div>
             </div>
         </div>
-    </div>
-    <div>
-        <InertiaLink href="/inputdata"
-            ><span class="text-3xl">admin</span></InertiaLink
-        >
     </div>
 </template>
