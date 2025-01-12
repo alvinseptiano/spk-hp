@@ -81,7 +81,6 @@ class SmartphoneController extends Controller
             $data = [
                 'criteria' => Criteria::all(),
                 'alternative' => Alternative::all(),
-                'smartphone' => Smartphone::all(),
                 'subcriteria' => Subcriteria::with('criteria')->get(),
                 'score' => Score::all(),
             ];
