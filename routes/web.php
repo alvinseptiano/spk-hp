@@ -8,22 +8,20 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SmartphoneController;
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-
-    
-})->middleware('auth')->name('dashboard');
+// Route::get('/', function () {
+//     return Inertia::render('Home', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// })->middleware('auth')->name('dashboard');
 
 Route::get('/rekomendasi', function () {
     return Inertia::render('Rekomendasi');
 })->name('rekomendasi');
 
-Route::get('/home', function () {
+Route::get('/', function () {
     return Inertia::render('Home');
 })->name('homepage');
 

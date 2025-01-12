@@ -65,14 +65,19 @@ onMounted(() => {
         </div>
 
         <div class="navbar-center">
-            <a href="/dashboard" class="btn btn-ghost text-xl">SPK HP</a>
+            <a href="/" class="btn btn-ghost text-xl">SPK HP</a>
         </div>
 
         <div class="navbar-end">
             <div class="dropdown dropdown-end">
-                <div tabindex="0" role="button" class="btn rounded-btn">
+                <!-- <div
+                    v-if="user.name"
+                    tabindex="0"
+                    role="button"
+                    class="btn rounded-btn"
+                >
                     {{ user.name }}
-                </div>
+                </div> -->
                 <ul
                     tabindex="0"
                     class="menu dropdown-content rounded-box bg-base-100 z-[1] mt-4 w-52 p-2"
