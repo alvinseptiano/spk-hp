@@ -1,9 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Head } from '@inertiajs/vue3';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import FlashMessage from '@/Components/FlashMessage.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, Link as InertiaLink } from '@inertiajs/vue3';
 import axios from 'axios';
+import { onMounted, ref } from 'vue';
 
 const tableData = ref({}); // Initialize as an empty object
 const selectedAlternative = ref(null);
@@ -98,16 +98,19 @@ const fetchItems = async () => {
 
 <template>
     <AuthenticatedLayout>
+        <InertiaLink href="/preferensi" class="btn btn-primary mb-10">
+            Hasil Penilaian
+        </InertiaLink>
         <Head title="Preferensi" />
         <FlashMessage :show="showToast" :message="toastMessage" />
         <div>
-            <table class="table-pin-cols table w-full">
+            <table class="table-pin-cols table-sm table w-full">
                 <thead class="bg-base-300 text-center font-bold">
                     <tr>
                         <th class="text-center" style="width: 5%">
                             Alternatif
                         </th>
-                        <th class="text-center">Nama</th>
+                        <th class="text-center" style="width: 15%">Nama</th>
                         <th
                             v-for="criterion in criteriaData"
                             :key="criterion.id"
@@ -151,11 +154,11 @@ const fetchItems = async () => {
                     </tr>
                 </tbody>
             </table>
-
-            <table class="table-pin-cols table w-full">
+            <div class="divider my-20"></div>
+            <table class="table-pin-cols table-sm mt-20 table w-full">
                 <thead class="bg-base-300 text-center font-bold">
                     <tr>
-                        <th class="text-center" style="width: 5%">
+                        <th class="text-center" style="width: 20%">
                             Alternatif
                         </th>
                         <th
