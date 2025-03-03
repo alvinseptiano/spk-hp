@@ -121,17 +121,17 @@ onMounted(() => {
                     <div v-if="true" class="mb-4 block">
                         <div role="alert" class="alert">
                             <ExclamationTriangleIcon
-                                class="text-error h-5 w-5"
+                                class="h-5 w-5 text-error"
                             />
                             <span>Error Request</span>
                         </div>
                     </div>
-                    <div class="breadcrumbs bg-base-200 rounded-lg text-lg">
+                    <div class="breadcrumbs rounded-lg bg-base-200 text-lg">
                         <ul class="flex items-center">
                             <li>
                                 <button
                                     @click="navigateToPath('')"
-                                    class="text-accent px-2 text-lg"
+                                    class="px-2 text-lg text-accent"
                                 >
                                     ..
                                 </button>
@@ -147,7 +147,7 @@ onMounted(() => {
                                                 getPathUpToIndex(index),
                                             )
                                         "
-                                        class="text-accent px-2 text-lg"
+                                        class="px-2 text-lg text-accent"
                                     >
                                         {{ segment }}
                                     </button>
@@ -181,10 +181,10 @@ onMounted(() => {
                 </div>
 
                 <!-- Files and Folders List -->
-                <div class="bg-base-100 rounded-lg">
+                <div class="rounded-lg bg-base-100">
                     <div class="overflow-auto">
                         <table
-                            class="table-pin-rows table-sm z-10 table w-full"
+                            class="table table-pin-rows table-sm z-10 w-full"
                         >
                             <thead>
                                 <tr>

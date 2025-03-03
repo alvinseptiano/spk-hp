@@ -1,11 +1,11 @@
 <script setup>
-import {
-    ExclamationCircleIcon,
-    MoonIcon,
-    SunIcon,
-} from '@heroicons/vue/24/solid';
-import { Link as InertiaLink, router, usePage } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue';
+import {
+    SunIcon,
+    MoonIcon,
+    ExclamationCircleIcon,
+} from '@heroicons/vue/24/solid';
 const page = usePage();
 
 const logout = () => {
@@ -14,19 +14,19 @@ const logout = () => {
     });
 };
 
-const currentTheme = ref('cupcake');
+const currentTheme = ref('nord');
 
 const toggleTheme = () => {
-    const newTheme = currentTheme.value === 'cupcake' ? 'dim' : 'cupcake';
+    const newTheme = currentTheme.value === 'nord' ? 'dim' : 'nord';
     applyTheme(newTheme);
 };
 
 const initializeTheme = () => {
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme && (savedTheme === 'cupcake' || savedTheme === 'dim')) {
+    if (savedTheme && (savedTheme === 'nord' || savedTheme === 'dim')) {
         applyTheme(savedTheme);
     } else {
-        applyTheme('cupcake');
+        applyTheme('nord');
     }
 };
 
@@ -63,11 +63,8 @@ onMounted(() => {
             </div>
         </div>
 
-        <div class="navbar-center gap-4">
-            <InertiaLink href="/">Home</InertiaLink>
-            <InertiaLink href="/inputdata">Input Data</InertiaLink>
-            <InertiaLink href="/matrix">Nilai Karyawan</InertiaLink>
-            <InertiaLink href="/profile">Profil</InertiaLink>
+        <div class="navbar-center">
+            <a href="/" class="btn btn-ghost text-xl">SPK HP</a>
         </div>
 
         <div class="navbar-end">
@@ -96,7 +93,7 @@ onMounted(() => {
                 <input
                     type="checkbox"
                     class="theme-controller hidden"
-                    :checked="currentTheme === 'cupcake'"
+                    :checked="currentTheme === 'dim'"
                     @change="toggleTheme"
                 />
                 <!-- sun icon -->
@@ -110,8 +107,8 @@ onMounted(() => {
         <div class="modal-box">
             <h3 class="text-lg font-bold">About Encrypt It</h3>
             <p class="py-4">
-                Didalam sistem ini digunakan algoritma SAW atau yang bisa
-                disingkat dengan Simple Additive Weighting
+                This is a simple web application that helps you encrypt and
+                decrypt text using various encryption methods.
             </p>
             <div class="modal-action">
                 <form method="dialog">

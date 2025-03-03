@@ -1,14 +1,3 @@
 {
-    "git.ignoreLimitWarning": true,
-    "eslint.workingDirectories": ["."],
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit"
-    },
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "vue",
-        "typescript",
-        "typescriptreact"
-    ]
+    "git.ignoreLimitWarning": true
 }

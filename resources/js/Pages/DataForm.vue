@@ -1,17 +1,17 @@
 <script setup>
-import AccentButton from '@/Components/AccentButton.vue';
-import FlashMessage from '@/Components/FlashMessage.vue';
+import { Head, router, usePage, WhenVisible } from '@inertiajs/vue3';
+import { ref, watch, nextTick, onMounted } from 'vue';
 import Modal from '@/Components/Modal.vue';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {
     PencilSquareIcon,
+    TrashIcon,
     PlusCircleIcon,
     PlusIcon,
-    TrashIcon,
 } from '@heroicons/vue/24/solid';
-import { Head, router, usePage, WhenVisible } from '@inertiajs/vue3';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AccentButton from '@/Components/AccentButton.vue';
+import FlashMessage from '@/Components/FlashMessage.vue';
 import axios from 'axios';
-import { nextTick, onMounted, ref, watch } from 'vue';
 
 const page = usePage();
 const modalType = ref('');
@@ -90,30 +90,30 @@ watch(
     },
 );
 
-// watch(
-//     () => page.props.flash.refresh,
-//     async (newValue) => {
-//         if (newValue) {
-//             await fetchItems();
-//             // showToast.value = true;
-//             router.visit(window.location.pathname, {
-//                 preserveScroll: true,
-//                 preserveState: true,
-//                 replace: true,
-//                 // onSuccess: () => {
-//                 //     if (page.props.flash.message) {
-//                 //         toastMessage.value = page.props.flash.message;
-//                 //         showToast.value = true;
-//                 //         setTimeout(() => {
-//                 //             showToast.value = false;
-//                 //         }, 3000);
-//                 //     }
-//                 // },
-//             });
-//         }
-//     },
-//     { immediate: true },
-// );
+watch(
+    () => page.props.flash.refresh,
+    async (newValue) => {
+        if (newValue) {
+            await fetchItems();
+            // showToast.value = true;
+            router.visit(window.location.pathname, {
+                preserveScroll: true,
+                preserveState: true,
+                replace: true,
+                // onSuccess: () => {
+                //     if (page.props.flash.message) {
+                //         toastMessage.value = page.props.flash.message;
+                //         showToast.value = true;
+                //         setTimeout(() => {
+                //             showToast.value = false;
+                //         }, 3000);
+                //     }
+                // },
+            });
+        }
+    },
+    { immediate: true },
+);
 
 onMounted(() => {
     fetchItems();
@@ -165,9 +165,7 @@ onMounted(() => {
                                             Alternatif
                                         </th>
                                         <th class="text-center">Nama</th>
-                                        <th class="text-center">
-                                            Tanggal Lahir
-                                        </th>
+
                                         <th
                                             class="text-center"
                                             style="width: 5%"
@@ -188,12 +186,6 @@ onMounted(() => {
                                         </td>
                                         <td class="text-center">
                                             {{ item.name }}
-                                            <div class="badge">
-                                                {{ item.role }}
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            {{ item.dob }}
                                         </td>
                                         <td class="flow-row flex">
                                             <button
@@ -362,7 +354,7 @@ onMounted(() => {
                                             @click="
                                                 openModal(
                                                     'subcriteria',
-                                                    'add',
+                                                    'edit',
                                                     item,
                                                     item.id,
                                                 )
@@ -391,9 +383,9 @@ onMounted(() => {
                         <table class="table-pin-rows table-pin-cols table">
                             <thead class="bg-base-300 text-center">
                                 <tr>
-                                    <th class="text-center" style="width: 5%">
+                                    <!-- <th class="text-center" style="width: 5%">
                                         Kriteria
-                                    </th>
+                                    </th> -->
                                     <th class="text-center">Sub Kriteria</th>
                                     <th class="text-center">Nilai</th>
                                     <th class="text-center" style="width: 10%">
@@ -406,16 +398,14 @@ onMounted(() => {
                                     v-for="item in tableData['subcriteria']"
                                     :key="item.name"
                                 >
-                                    <td class="text-center">
-                                        C{{ item.criteria_id }}
-                                    </td>
+                                    <!-- <td class="text-center">C{{ item.id }}</td> -->
                                     <td class="text-center">
                                         {{ item.name }}
+                                        <!-- <div class="badge">C{{ item.id }}</div> -->
                                     </td>
                                     <td class="text-center">
                                         {{ item.value }}
                                     </td>
-
                                     <td class="flex justify-center gap-2">
                                         <button
                                             class="btn btn-ghost btn-sm"

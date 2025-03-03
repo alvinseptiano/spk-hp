@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alternative;
 use App\Models\Criteria;
 use App\Models\SubCriteria;
 use App\Models\Score;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Smartphone;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Schema;
 
-class KaryawanController extends Controller
+class SmartphoneController extends Controller
 {
     public function index(Request $request)
     {
@@ -21,6 +25,7 @@ class KaryawanController extends Controller
     public function store(Request $request)
     {
         // Extract type and data from request
+        // Set validation rules based on type
         $formData = $request->data;
         $type = $request->type;
         $rules = [];
@@ -28,16 +33,8 @@ class KaryawanController extends Controller
         if ($type == 'alternative') {
             $rules = [
                 'name' => 'required|string|max:255',
-                'email' => 'required|email',
-                'dob' => 'required|date',
-                'role' => 'required',
             ];
-            $model = User::class;
-
-            // Set the password as the same as the date of birth
-            if (!empty($formData['dob'])) {
-                $formData['password'] = bcrypt($formData['dob']);
-            }
+            $model = Alternative::class;
         } elseif ($type == 'criteria') {
             $rules = [
                 'name' => 'required|string|max:255',
@@ -71,6 +68,7 @@ class KaryawanController extends Controller
             return Redirect::back()
                 ->with('refresh', true)
                 ->with('message', 'Item berhasil ditambah');
+
         } catch (\Exception $e) {
             return Redirect::back()
                 ->with('error', 'An error occurred: ' . $e->getMessage());
@@ -82,7 +80,7 @@ class KaryawanController extends Controller
         try {
             $data = [
                 'criteria' => Criteria::all(),
-                'alternative' => User::all(),
+                'alternative' => Alternative::all(),
                 'subcriteria' => Subcriteria::with('criteria')->get(),
                 'score' => Score::all(),
             ];
@@ -96,7 +94,6 @@ class KaryawanController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'refresh' => true,
                 'message' => 'Error fetching data: ' . $e->getMessage()
             ], 500);
         }
@@ -109,10 +106,10 @@ class KaryawanController extends Controller
 
         if ($type == 'alternative') {
             $rules = [
-                'data.id' => 'required|exists:users,id',
+                'data.id' => 'required|exists:alternatives,id',
                 'data.name' => 'required|string|max:255',
             ];
-            $model = User::class;
+            $model = Alternative::class;
         } elseif ($type == 'criteria') {
             $rules = [
                 'data.id' => 'required|exists:criterias,id',
@@ -152,7 +149,7 @@ class KaryawanController extends Controller
         try {
             $model = match ($type) {
                 'criteria' => new Criteria(),
-                'alternative' => new User(),
+                'alternative' => new Alternative(),
                 'subcriteria' => new Subcriteria(),
                 default => throw new \Exception('Invalid type specified')
             };
@@ -224,7 +221,7 @@ class KaryawanController extends Controller
     {
         try {
             $validated = $request->validate([
-                'alternative_id' => 'required|exists:users,id',
+                'alternative_id' => 'required|exists:alternatives,id',
                 'criteria_id' => 'required|exists:criterias,id', // Changed from criterion_id
                 'value' => 'required|numeric'
             ]);
@@ -251,7 +248,7 @@ class KaryawanController extends Controller
     {
         $data = [
             'criteria' => Criteria::all(),
-            'alternative' => User::all(),
+            'alternative' => Alternative::all(),
             'subcriteria' => Subcriteria::all(),
             'scores' => Score::all()
         ];

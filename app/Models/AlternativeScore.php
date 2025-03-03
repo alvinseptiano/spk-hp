@@ -3,22 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Score extends Model
+class AlternativeScore extends Model
 {
-    protected $table = 'scores';
-
     protected $fillable = [
         'alternative_id',
         'criteria_id',
-        'value'
+        'score'
     ];
 
-    public function alternative()
+    public function alternative(): BelongsTo
     {
         return $this->belongsTo(Alternative::class);
     }
-    public function criteria()
+
+    public function criteria(): BelongsTo
     {
         return $this->belongsTo(Criteria::class);
     }

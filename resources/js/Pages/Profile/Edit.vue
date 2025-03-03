@@ -3,7 +3,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
-import ViewGrade from './Partials/ViewGrade.vue';
 import { Head } from '@inertiajs/vue3';
 
 defineProps({
@@ -23,7 +22,6 @@ defineProps({
         <div class="mt-6 flex flex-col gap-4">
             <h2 class="divider text-xl font-bold">Akun</h2>
             <div class="relative overflow-auto">
-                <ViewGrade />
                 <UpdateProfileInformationForm
                     :must-verify-email="mustVerifyEmail"
                     :status="status"
