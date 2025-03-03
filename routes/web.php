@@ -20,6 +20,8 @@ Route::get('/home', function () {
     return Inertia::render('Home');
 })->name('homepage');
 
+Route::get('/getdata', [SmartphoneController::class, 'show']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Home');
@@ -37,7 +39,6 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Preferensi');
     })->name('preferensi');
 
-    Route::get('/getdata', [SmartphoneController::class, 'show']);
 
     // Input Data
     Route::post('/add', [SmartphoneController::class, 'store']);
