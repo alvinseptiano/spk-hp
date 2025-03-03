@@ -17,8 +17,6 @@ const recommendationSection = ref(null);
 
 // New: Define searchType and price inputs
 const searchType = ref('Harga');
-// const minimumPrice = ref('');
-// const maximumPrice = ref('');
 
 onMounted(async () => {
     try {
@@ -87,6 +85,12 @@ const saveValue = async () => {
     if (recommendationSection.value) {
         recommendationSection.value.scrollIntoView({ behavior: 'smooth' });
     }
+};
+
+const clearSelection = () => {
+    Object.keys(selectedValues.value).forEach((key) => {
+        selectedValues.value[key] = ''; // Reset each dropdown to empty
+    });
 };
 </script>
 
@@ -178,6 +182,12 @@ const saveValue = async () => {
                                 Kembali
                             </AccentButton>
                         </InertiaLink>
+                        <button
+                            class="btn btn-secondary"
+                            @click="clearSelection"
+                        >
+                            Kosongkan Pilihan
+                        </button>
                         <button class="btn btn-primary" @click="saveValue">
                             Rekomendasikan
                         </button>
