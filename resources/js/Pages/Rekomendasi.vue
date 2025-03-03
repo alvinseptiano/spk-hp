@@ -51,7 +51,7 @@ const getSubcriteria = (criterionId) => {
 // Computed property to filter out "test"
 const filteredCriteria = computed(() => {
     return criteriaData.value.filter(
-        (criterion) => criterion.name?.toLowerCase() !== 'test',
+        (criterion) => criterion.name?.toLowerCase() !== 'harga',
     );
 });
 const saveValue = async () => {

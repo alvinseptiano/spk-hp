@@ -144,7 +144,7 @@ const fetchItems = async () => {
                                         (sub) =>
                                             sub.value ===
                                             getValue(item.id, criterion.id),
-                                    )?.value || 'pilih'
+                                    )?.name || 'pilih'
                                 }}
                             </div>
                         </td>
