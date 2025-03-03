@@ -1,8 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { onMounted, ref } from 'vue';
+import { ArrowLeftCircleIcon } from '@heroicons/vue/24/solid';
+import { Head, Link as InertiaLink } from '@inertiajs/vue3';
 import axios from 'axios';
+import { onMounted, ref } from 'vue';
 
 const tableData = ref(null);
 const isLoading = ref(true);
@@ -26,7 +27,10 @@ onMounted(() => {
 <template>
     <AuthenticatedLayout>
         <Head title="Preferensi" />
-
+        <InertiaLink href="/matrix" class="btn btn-primary mb-10">
+            <ArrowLeftCircleIcon class="size-5" />
+            Kembali
+        </InertiaLink>
         <!-- Loading State -->
         <div v-if="isLoading" class="flex h-64 items-center justify-center">
             <p>Loading data...</p>

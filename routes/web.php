@@ -6,7 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\SmartphoneController;
+use App\Http\Controllers\KaryawanController;
 
 Route::get('/rekomendasi', function () {
     return Inertia::render('Rekomendasi');
@@ -20,7 +20,8 @@ Route::get('/home', function () {
     return Inertia::render('Home');
 })->name('homepage');
 
-Route::middleware('auth')->group(function () {
+// Route::middleware('auth', 'role:admin,manager')->group(function () {
+Route::middleware(['auth', 'role:admin,manager'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Home');
     })->name('dashboard');
@@ -37,16 +38,16 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Preferensi');
     })->name('preferensi');
 
-    Route::get('/getdata', [SmartphoneController::class, 'show']);
+    Route::get('/getdata', [KaryawanController::class, 'show']);
 
     // Input Data
-    Route::post('/add', [SmartphoneController::class, 'store']);
-    Route::put('/update', [SmartphoneController::class, 'update']);
-    Route::delete('/{type}/{id}', [SmartphoneController::class, 'destroy']);
-    Route::post('/addsubcriteria/{id}', [SmartphoneController::class, 'addSubCriteria']);
+    Route::post('/add', [KaryawanController::class, 'store']);
+    Route::put('/update', [KaryawanController::class, 'update']);
+    Route::delete('/{type}/{id}', [KaryawanController::class, 'destroy']);
+    Route::post('/addsubcriteria/{id}', [KaryawanController::class, 'addSubCriteria']);
 
-    Route::post('/addscore', [SmartphoneController::class, 'addScore']);
-    Route::get('/getscore', [SmartphoneController::class, 'getScore']);
+    Route::post('/addscore', [KaryawanController::class, 'addScore']);
+    Route::get('/getscore', [KaryawanController::class, 'getScore']);
 
     Route::get('/saw/calculate', [SAWController::class, 'calculate'])->name('saw.calculate');
     Route::get('/wp/calculate', [WPController::class, 'calculate'])->name('wp.calculate');

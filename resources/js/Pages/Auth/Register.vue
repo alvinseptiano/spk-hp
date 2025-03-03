@@ -10,6 +10,8 @@ const form = useForm({
     name: '',
     email: '',
     password: '',
+    dob: '',
+    role: '',
     password_confirmation: '',
 });
 
@@ -23,7 +25,7 @@ const submit = () => {
 <template>
     <GuestLayout>
         <div class="flex justify-center">
-            <div class="mx-64 mt-20 min-w-96 rounded-xl p-4 outline outline-2">
+            <div class="mx-64 mt-20 min-w-96 rounded-xl p-4 outline-2">
                 <h1 class="text-center text-3xl font-extrabold">Register</h1>
                 <form @submit.prevent="submit">
                     <div>
@@ -57,6 +59,20 @@ const submit = () => {
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
 
+                    <div class="mt-4">
+                        <InputLabel for="date" value="Tanggal Lahir" />
+
+                        <TextInput
+                            id="date"
+                            type="date"
+                            class="mt-1 block w-full"
+                            v-model="form.dob"
+                            required
+                            autocomplete="username"
+                        />
+
+                        <InputError class="mt-2" :message="form.errors.email" />
+                    </div>
                     <div class="mt-4">
                         <InputLabel for="password" value="Password" />
 

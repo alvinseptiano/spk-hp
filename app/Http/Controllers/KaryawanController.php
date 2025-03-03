@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alternative;
 use App\Models\Criteria;
 use App\Models\SubCriteria;
 use App\Models\Score;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Smartphone;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Schema;
 
-class SmartphoneController extends Controller
+class KaryawanController extends Controller
 {
     public function index(Request $request)
     {
@@ -25,7 +21,6 @@ class SmartphoneController extends Controller
     public function store(Request $request)
     {
         // Extract type and data from request
-        // Set validation rules based on type
         $formData = $request->data;
         $type = $request->type;
         $rules = [];
@@ -33,8 +28,16 @@ class SmartphoneController extends Controller
         if ($type == 'alternative') {
             $rules = [
                 'name' => 'required|string|max:255',
+                'email' => 'required|email',
+                'dob' => 'required|date',
+                'role' => 'required',
             ];
-            $model = Alternative::class;
+            $model = User::class;
+
+            // Set the password as the same as the date of birth
+            if (!empty($formData['dob'])) {
+                $formData['password'] = bcrypt($formData['dob']);
+            }
         } elseif ($type == 'criteria') {
             $rules = [
                 'name' => 'required|string|max:255',
@@ -68,7 +71,6 @@ class SmartphoneController extends Controller
             return Redirect::back()
                 ->with('refresh', true)
                 ->with('message', 'Item berhasil ditambah');
-
         } catch (\Exception $e) {
             return Redirect::back()
                 ->with('error', 'An error occurred: ' . $e->getMessage());
@@ -80,7 +82,7 @@ class SmartphoneController extends Controller
         try {
             $data = [
                 'criteria' => Criteria::all(),
-                'alternative' => Alternative::all(),
+                'alternative' => User::all(),
                 'subcriteria' => Subcriteria::with('criteria')->get(),
                 'score' => Score::all(),
             ];
@@ -94,6 +96,7 @@ class SmartphoneController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
+                'refresh' => true,
                 'message' => 'Error fetching data: ' . $e->getMessage()
             ], 500);
         }
@@ -106,10 +109,10 @@ class SmartphoneController extends Controller
 
         if ($type == 'alternative') {
             $rules = [
-                'data.id' => 'required|exists:alternatives,id',
+                'data.id' => 'required|exists:users,id',
                 'data.name' => 'required|string|max:255',
             ];
-            $model = Alternative::class;
+            $model = User::class;
         } elseif ($type == 'criteria') {
             $rules = [
                 'data.id' => 'required|exists:criterias,id',
@@ -149,7 +152,7 @@ class SmartphoneController extends Controller
         try {
             $model = match ($type) {
                 'criteria' => new Criteria(),
-                'alternative' => new Alternative(),
+                'alternative' => new User(),
                 'subcriteria' => new Subcriteria(),
                 default => throw new \Exception('Invalid type specified')
             };
@@ -221,7 +224,7 @@ class SmartphoneController extends Controller
     {
         try {
             $validated = $request->validate([
-                'alternative_id' => 'required|exists:alternatives,id',
+                'alternative_id' => 'required|exists:users,id',
                 'criteria_id' => 'required|exists:criterias,id', // Changed from criterion_id
                 'value' => 'required|numeric'
             ]);
@@ -248,7 +251,7 @@ class SmartphoneController extends Controller
     {
         $data = [
             'criteria' => Criteria::all(),
-            'alternative' => Alternative::all(),
+            'alternative' => User::all(),
             'subcriteria' => Subcriteria::all(),
             'scores' => Score::all()
         ];

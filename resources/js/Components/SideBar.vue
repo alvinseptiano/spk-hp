@@ -8,7 +8,7 @@ const isOpen = ref(false);
 <template>
     <div
         :class="[
-            'fixed left-4 top-20 z-10 mt-4 h-[calc(100vh-8rem)] rounded-lg bg-base-100 pl-3 transition-all duration-200',
+            'bg-base-100 fixed top-20 left-4 z-10 mt-4 h-[calc(100vh-8rem)] rounded-lg pl-3 transition-all duration-200',
             isOpen ? 'w-48' : 'w-18',
         ]"
     >
@@ -23,7 +23,7 @@ const isOpen = ref(false);
             </button>
             <h2
                 :class="[
-                    'ml-2 mt-6 text-xl font-bold transition-opacity',
+                    'mt-6 ml-2 text-xl font-bold transition-opacity',
                     isOpen ? 'opacity-100' : 'hidden opacity-0',
                 ]"
             >
