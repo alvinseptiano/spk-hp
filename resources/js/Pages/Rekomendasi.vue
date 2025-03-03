@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import AccentButton from '@/Components/AccentButton.vue';
 import { ArrowLeftIcon } from '@heroicons/vue/24/solid';
 import { Head } from '@inertiajs/vue3';
@@ -12,9 +12,13 @@ const subcriteriaData = ref([]);
 const alternativesData = ref([]);
 const scoresData = ref([]);
 const selectedValues = ref({});
-const showPhone = ref(false);
-const recommendedPhone = ref('');
+const recommendedPhone = ref([]);
 const recommendationSection = ref(null);
+
+// New: Define searchType and price inputs
+const searchType = ref('Harga');
+const minimumPrice = ref('');
+const maximumPrice = ref('');
 
 onMounted(async () => {
     try {
@@ -29,7 +33,6 @@ const fetchItems = async () => {
         const response = await axios.get('/getdata');
         const data = response.data.data;
 
-        // Extract relevant data
         criteriaData.value = data.criteria;
         subcriteriaData.value = data.subcriteria;
         alternativesData.value = data.alternative;
@@ -45,21 +48,26 @@ const getSubcriteria = (criterionId) => {
     );
 };
 
+// Computed property to filter out "test"
+const filteredCriteria = computed(() => {
+    return criteriaData.value.filter(
+        (criterion) => criterion.name?.toLowerCase() !== 'test',
+    );
+});
 const saveValue = async () => {
-    showPhone.value = true;
-
-    // Filter logic based on selected criteria
+    // Ensure criteria are selected
     const activeCriteria = Object.keys(selectedValues.value).filter(
         (criterionId) => selectedValues.value[criterionId],
     );
 
-    let filteredAlternatives = [];
+    if (activeCriteria.length === 0) {
+        recommendedPhone.value = ['Silakan pilih kriteria terlebih dahulu'];
+        return;
+    }
 
-    if (activeCriteria.length === 1) {
-        // If only one criterion is selected
-        const criterionId = activeCriteria[0];
-        const selectedValue = selectedValues.value[criterionId];
-        filteredAlternatives = alternativesData.value.filter((alternative) => {
+    let filteredAlternatives = alternativesData.value.filter((alternative) => {
+        return activeCriteria.every((criterionId) => {
+            const selectedValue = selectedValues.value[criterionId];
             const score = scoresData.value.find(
                 (s) =>
                     s.alternative_id === alternative.id &&
@@ -67,31 +75,15 @@ const saveValue = async () => {
             );
             return score && score.value === selectedValue;
         });
-    } else if (activeCriteria.length > 1) {
-        // If multiple criteria are selected
-        filteredAlternatives = alternativesData.value.filter((alternative) => {
-            return activeCriteria.every((criterionId) => {
-                const selectedValue = selectedValues.value[criterionId];
-                const score = scoresData.value.find(
-                    (s) =>
-                        s.alternative_id === alternative.id &&
-                        s.criteria_id === parseInt(criterionId, 10),
-                );
-                return score && score.value === selectedValue;
-            });
-        });
-    }
+    });
 
-    // Set the recommended phone
+    // Store all matching phones in an array
     recommendedPhone.value =
         filteredAlternatives.length > 0
-            ? filteredAlternatives[0].name
-            : 'Tidak ditemukan';
+            ? filteredAlternatives.map((alt) => alt.name)
+            : ['Tidak ada smartphone yang cocok dengan kriteria Anda.'];
 
-    // Clear selected values
-    selectedValues.value = {};
-
-    // Scroll to the recommendation section
+    // Scroll to recommendation section
     if (recommendationSection.value) {
         recommendationSection.value.scrollIntoView({ behavior: 'smooth' });
     }
@@ -99,123 +91,106 @@ const saveValue = async () => {
 </script>
 
 <template>
-    <Head :title="Rekomendasi" />
+    <Head :title="'Rekomendasi'" />
     <TopBar />
 
     <div class="bg-base-300 min-h-screen px-4 py-10">
-        <div class="container mx-auto max-w-2xl">
-            <!-- Phone Display Section -->
-            <div v-if="showPhone" class="mb-8">
-                <div class="mx-auto w-64">
-                    <svg
-                        viewBox="0 0 300 600"
-                        class="w-full"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <!-- Phone Frame -->
-                        <rect
-                            x="10"
-                            y="10"
-                            width="280"
-                            height="580"
-                            rx="40"
-                            fill="#333"
-                        />
-                        <!-- Screen -->
-                        <rect
-                            x="20"
-                            y="20"
-                            width="260"
-                            height="560"
-                            rx="35"
-                            fill="#1a1a1a"
-                        />
-                        <!-- Notch -->
-                        <rect
-                            x="100"
-                            y="25"
-                            width="100"
-                            height="25"
-                            rx="12"
-                            fill="#333"
-                        />
-                        <!-- Text Content -->
-                        <text
-                            x="150"
-                            y="250"
-                            text-anchor="middle"
-                            fill="white"
-                            class="text-lg"
-                        >
-                            Rekomendasi Smartphone
-                        </text>
-                        <text
-                            x="150"
-                            y="280"
-                            text-anchor="middle"
-                            fill="white"
-                            class="text-lg"
-                        >
-                            anda adalah
-                        </text>
-                        <text
-                            x="150"
-                            y="320"
-                            text-anchor="middle"
-                            fill="white"
-                            font-weight="bold"
-                            class="text-xl"
-                        >
-                            {{ recommendedPhone }}
-                        </text>
-                    </svg>
-                </div>
-            </div>
+        <div class="container mx-auto max-w-4xl">
+            <div class="flex flex-col gap-6 lg:flex-row">
+                <!-- Left: Criteria Selection -->
+                <div
+                    class="bg-base-300 w-full rounded-lg p-6 shadow-lg lg:w-1/2"
+                >
+                    <h3 class="mb-6 text-center text-xl font-bold">
+                        Pilih Kriteria Smartphone
+                    </h3>
 
-            <!-- Criteria Selection Section -->
-            <div class="bg-base-300 rounded-lg p-6 shadow-lg">
-                <h3 class="mb-6 text-center text-xl font-bold">
-                    Pilih Kriteria Smartphone
-                </h3>
+                    <h4 class="mb-4 text-xl font-bold">Jenis Pencarian:</h4>
 
-                <div class="space-y-4">
-                    <div
-                        v-for="criterion in criteriaData"
-                        :key="criterion.id"
-                        class="form-control"
+                    <select
+                        v-model="searchType"
+                        class="select mb-10 w-full"
+                        name="searchType"
                     >
-                        <label class="label">
-                            <span class="label-text">{{ criterion.name }}</span>
-                        </label>
-                        <select
-                            v-model="selectedValues[criterion.id]"
-                            class="select select-bordered w-full"
+                        <option value="Harga">Harga</option>
+                        <option value="Spesifikasi">Spesifikasi</option>
+                    </select>
+
+                    <div class="space-y-4" v-if="searchType === 'Harga'">
+                        <div class="font-bold">Harga</div>
+                        <input
+                            v-model="minimumPrice"
+                            class="input input-bordered w-full"
+                            type="number"
+                            placeholder="Harga Minimum"
+                        />
+                        <input
+                            v-model="maximumPrice"
+                            class="input input-bordered w-full"
+                            type="number"
+                            placeholder="Harga Maximum"
+                        />
+                    </div>
+
+                    <div class="space-y-4" v-if="searchType === 'Spesifikasi'">
+                        <div
+                            v-for="criterion in filteredCriteria"
+                            :key="criterion.id"
+                            class="form-control"
                         >
-                            <option value="" disabled>
-                                Select {{ criterion.name }}
-                            </option>
-                            <option
-                                v-for="sub in getSubcriteria(criterion.id)"
-                                :key="sub.id"
-                                :value="sub.value"
+                            <label class="label">
+                                <span class="label-text">{{
+                                    criterion.name
+                                }}</span>
+                            </label>
+                            <select
+                                v-model="selectedValues[criterion.id]"
+                                class="select select-bordered w-full"
                             >
-                                {{ sub.name }}
-                            </option>
-                        </select>
+                                <option value="" disabled>
+                                    Select {{ criterion.name }}
+                                </option>
+                                <option
+                                    v-for="sub in getSubcriteria(criterion.id)"
+                                    :key="sub.id"
+                                    :value="sub.value"
+                                >
+                                    {{ sub.value }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex justify-center gap-4">
+                        <InertiaLink href="/home">
+                            <AccentButton class="flex items-center gap-2">
+                                <ArrowLeftIcon class="h-5 w-5" />
+                                Kembali
+                            </AccentButton>
+                        </InertiaLink>
+                        <button class="btn btn-primary" @click="saveValue">
+                            Rekomendasikan
+                        </button>
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="mt-8 flex justify-center gap-4">
-                    <InertiaLink href="/home">
-                        <AccentButton class="flex items-center gap-2">
-                            <ArrowLeftIcon class="h-5 w-5" />
-                            Kembali
-                        </AccentButton>
-                    </InertiaLink>
-                    <button class="btn btn-primary" @click="saveValue">
-                        Rekomendasikan
-                    </button>
+                <!-- Right: Search Results -->
+                <div
+                    class="bg-base-100 w-full rounded-lg p-6 shadow-lg lg:w-1/2"
+                >
+                    <h3 class="mb-4 text-xl font-bold">Hasil Pencarian</h3>
+                    <ul v-if="recommendedPhone.length > 0">
+                        <li
+                            v-for="phone in recommendedPhone"
+                            :key="phone"
+                            class="border-b border-gray-300 p-2"
+                        >
+                            {{ phone }}
+                        </li>
+                    </ul>
+                    <p v-else class="text-gray-500">
+                        Tidak ada hasil ditemukan.
+                    </p>
                 </div>
             </div>
         </div>

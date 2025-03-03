@@ -144,7 +144,7 @@ const fetchItems = async () => {
                                         (sub) =>
                                             sub.value ===
                                             getValue(item.id, criterion.id),
-                                    )?.name || 'pilih'
+                                    )?.value || 'pilih'
                                 }}
                             </div>
                         </td>
@@ -213,7 +213,7 @@ const fetchItems = async () => {
                             v-model="selectedValue"
                             class="select select-bordered w-full"
                         >
-                            <option value="" disabled>Select a value</option>
+                            <option value="" disabled>Pilih nilai</option>
                             <option
                                 v-for="sub in getSubcriteria(
                                     selectedCriterion?.id,
@@ -221,7 +221,7 @@ const fetchItems = async () => {
                                 :key="sub.id"
                                 :value="sub.value"
                             >
-                                {{ sub.name }}
+                                {{ sub.value }}
                             </option>
                         </select>
                     </div>
