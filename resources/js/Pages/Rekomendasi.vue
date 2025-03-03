@@ -136,7 +136,7 @@ const saveValue = async () => {
                                     :key="sub.id"
                                     :value="sub.value"
                                 >
-                                    {{ sub.value }}
+                                    {{ sub.name }}
                                 </option>
                             </select>
                         </div>
