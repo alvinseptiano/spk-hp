@@ -17,8 +17,8 @@ const recommendationSection = ref(null);
 
 // New: Define searchType and price inputs
 const searchType = ref('Harga');
-const minimumPrice = ref('');
-const maximumPrice = ref('');
+// const minimumPrice = ref('');
+// const maximumPrice = ref('');
 
 onMounted(async () => {
     try {
@@ -116,20 +116,30 @@ const saveValue = async () => {
                         <option value="Spesifikasi">Spesifikasi</option>
                     </select>
 
-                    <div class="space-y-4" v-if="searchType === 'Harga'">
-                        <div class="font-bold">Harga</div>
-                        <input
-                            v-model="minimumPrice"
-                            class="input input-bordered w-full"
-                            type="number"
-                            placeholder="Harga Minimum"
-                        />
-                        <input
-                            v-model="maximumPrice"
-                            class="input input-bordered w-full"
-                            type="number"
-                            placeholder="Harga Maximum"
-                        />
+                    <div
+                        class="form-control space-y-4"
+                        v-if="searchType === 'Harga'"
+                    >
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">{{ Harga }}</span>
+                            </label>
+                            <select
+                                v-model="selectedValues[1]"
+                                class="select select-bordered w-full"
+                            >
+                                <option value="" disabled>
+                                    Select {{ Harga }}
+                                </option>
+                                <option
+                                    v-for="sub in getSubcriteria(1)"
+                                    :key="sub.id"
+                                    :value="sub.value"
+                                >
+                                    {{ sub.value }}
+                                </option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="space-y-4" v-if="searchType === 'Spesifikasi'">
