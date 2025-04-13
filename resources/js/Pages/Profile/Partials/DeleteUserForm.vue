@@ -39,10 +39,6 @@ const closeModal = () => {
 
 <template>
     <section class="space-y-6">
-        <header>
-            <h2 class="text-lg font-medium">Logout</h2>
-        </header>
-
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">
                 <h2 class="text-lg font-medium">
@@ -80,14 +76,14 @@ const closeModal = () => {
                         Cancel
                     </SecondaryButton>
 
-                    <DangerButton
-                        class="ms-3"
+                    <button
+                        class="btn btn-error ms-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
                         Delete Account
-                    </DangerButton>
+                    </button>
                 </div>
             </div>
         </Modal>
@@ -101,7 +97,9 @@ const closeModal = () => {
             </p>
         </header>
 
-        <DangerButton @click="confirmUserDeletion">Delete Account</DangerButton>
+        <div class="btn btn-error" @click="confirmUserDeletion">
+            Delete Account
+        </div>
 
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">
@@ -140,14 +138,14 @@ const closeModal = () => {
                         Cancel
                     </SecondaryButton>
 
-                    <DangerButton
-                        class="ms-3"
+                    <div
+                        class="btn btn-error ms-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
                         Delete Account
-                    </DangerButton>
+                    </div>
                 </div>
             </div>
         </Modal>
