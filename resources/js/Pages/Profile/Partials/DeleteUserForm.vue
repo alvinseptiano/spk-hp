@@ -1,16 +1,14 @@
 <script setup>
-import DangerButton from '@/Components/DangerButton.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { useForm, router, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { nextTick, ref } from 'vue';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
-const page = usePage();
 
 const form = useForm({
     password: '',
@@ -37,12 +35,6 @@ const closeModal = () => {
     form.clearErrors();
     form.reset();
 };
-
-const logout = () => {
-    router.post('/logout', {
-        _token: page.props.csrf_token,
-    });
-};
 </script>
 
 <template>
@@ -50,8 +42,6 @@ const logout = () => {
         <header>
             <h2 class="text-lg font-medium">Logout</h2>
         </header>
-
-        <DangerButton @click="logout">Logout</DangerButton>
 
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">

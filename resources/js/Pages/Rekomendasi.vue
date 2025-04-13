@@ -99,8 +99,15 @@ const clearSelection = () => {
     <TopBar />
 
     <div class="bg-base-300 min-h-screen px-4 py-10">
-        <div class="container mx-auto max-w-4xl">
+        <div class="container mx-auto">
             <div class="flex flex-col gap-6 lg:flex-row">
+                <div class="flex justify-start">
+                    <InertiaLink href="/home">
+                        <AccentButton class="flex items-center gap-2 px-4 py-2">
+                            <ArrowLeftIcon class="h-5 w-5" />
+                        </AccentButton>
+                    </InertiaLink>
+                </div>
                 <!-- Left: Criteria Selection -->
                 <div
                     class="bg-base-300 w-full rounded-lg p-6 shadow-lg lg:w-1/2"
@@ -175,25 +182,21 @@ const clearSelection = () => {
                         </div>
                     </div>
 
-                    <div class="mt-8 flex justify-center gap-4">
-                        <InertiaLink href="/home">
-                            <AccentButton class="flex items-center gap-2">
-                                <ArrowLeftIcon class="h-5 w-5" />
-                                Kembali
-                            </AccentButton>
-                        </InertiaLink>
+                    <div class="mt-8 flex justify-start gap-2">
                         <button
-                            class="btn btn-secondary"
+                            class="btn btn-secondary flex-shrink-0 px-4 py-2"
                             @click="clearSelection"
                         >
                             Kosongkan Pilihan
                         </button>
-                        <button class="btn btn-primary" @click="saveValue">
+                        <button
+                            class="btn btn-primary flex-shrink-0 px-4 py-2"
+                            @click="saveValue"
+                        >
                             Rekomendasikan
                         </button>
                     </div>
                 </div>
-
                 <!-- Right: Search Results -->
                 <div
                     class="bg-base-100 w-full rounded-lg p-6 shadow-lg lg:w-1/2"
