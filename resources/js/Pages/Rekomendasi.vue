@@ -11,7 +11,8 @@ const criteriaData = ref([]);
 const subcriteriaData = ref([]);
 const alternativesData = ref([]);
 const scoresData = ref([]);
-const selectedValues = ref({}); // Changed from reactive to ref
+const selectedValues = ref([]); // Changed from reactive to ref
+
 const recommendedPhone = ref([]);
 const recommendationSection = ref(null);
 
@@ -84,17 +85,7 @@ const saveValue = async () => {
             );
 
             if (!criterion) return false;
-
-            // Handle comparison based on type
-            if (criterion.type === 'manual') {
-                // Ensure case-insensitive comparison and trim whitespace for manual criteria
-                return (
-                    score.value.toLowerCase().trim() ===
-                    selectedValue.toLowerCase().trim()
-                );
-            } else {
-                return score.value === selectedValue;
-            }
+            return score.value === selectedValue;
         });
     });
 
@@ -192,7 +183,7 @@ const clearSelection = () => {
                             <template v-if="criterion.type === 'manual'">
                                 <input
                                     v-model="selectedValues[criterion.id]"
-                                    type="text"
+                                    type="number"
                                     class="input input-bordered w-full"
                                     :placeholder="'Enter ' + criterion.name"
                                 />
@@ -215,10 +206,12 @@ const clearSelection = () => {
                                         {{ sub.name }}
                                     </option>
                                 </select>
+                                <div>
+                                    {{ selectedValues[criterion.type] }}
+                                </div>
                             </template>
                         </div>
                     </div>
-
                     <div class="mt-8 flex justify-start gap-2">
                         <button
                             class="btn btn-secondary flex-shrink-0 px-4 py-2"
