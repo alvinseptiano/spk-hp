@@ -12,7 +12,8 @@ class Criteria extends Model
     protected $fillable = [
         'name',
         'weight',
-        'attribute'
+        'attribute',
+        'type',
     ];
 
     public function subcriteria(): HasMany

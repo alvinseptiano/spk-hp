@@ -108,9 +108,19 @@ watch(
                             <span class="label-text">Attribute</span>
                         </label>
                         <select class="select" v-model="form.data.attribute">
-                            <option disabled selected>Pick a color</option>
+                            <option disabled selected>Atribut</option>
                             <option value="cost">Cost</option>
                             <option value="benefit">Benefit</option>
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Tipe</span>
+                        </label>
+                        <select class="select" v-model="form.data.type">
+                            <option disabled selected>Tipe</option>
+                            <option value="option">Option</option>
+                            <option value="manual">Manual</option>
                         </select>
                     </div>
                 </template>
@@ -128,17 +138,6 @@ watch(
                             required
                         />
                     </div>
-
-                    <!-- <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Attribute</span>
-                        </label>
-                        <select class="select" v-model="form.data.attribute">
-                            <option disabled selected>Pick a color</option>
-                            <option value="cost">Cost</option>
-                            <option value="benefit">Benefit</option>
-                        </select>
-                    </div> -->
                 </template>
 
                 <div class="modal-action">

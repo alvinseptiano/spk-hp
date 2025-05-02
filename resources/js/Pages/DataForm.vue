@@ -252,6 +252,7 @@ onMounted(() => {
                                     <th class="text-center">Nama</th>
                                     <th class="text-center">Bobot</th>
                                     <th class="text-center">Atribut</th>
+                                    <th class="text-center">Tipe</th>
                                     <th class="text-center" style="width: 5%">
                                         Aksi
                                     </th>
@@ -273,6 +274,9 @@ onMounted(() => {
                                     </td>
                                     <td class="text-center">
                                         {{ item.attribute }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ item.type }}
                                     </td>
                                     <td class="flex justify-center gap-2">
                                         <button
@@ -360,7 +364,10 @@ onMounted(() => {
                                                 )
                                             "
                                         >
-                                            <PlusIcon class="size-5" />
+                                            <PlusIcon
+                                                v-if="item.type === 'option'"
+                                                class="size-5"
+                                            />
                                         </button>
                                         <button
                                             class="btn btn-ghost btn-sm"

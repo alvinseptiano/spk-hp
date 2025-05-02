@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->float('weight');
             $table->string('attribute');
+            $table->string('type');
             $table->timestamps();
         });
     }

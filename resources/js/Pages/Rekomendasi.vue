@@ -11,7 +11,7 @@ const criteriaData = ref([]);
 const subcriteriaData = ref([]);
 const alternativesData = ref([]);
 const scoresData = ref([]);
-const selectedValues = ref({});
+const selectedValues = ref({}); // Changed from reactive to ref
 const recommendedPhone = ref([]);
 const recommendationSection = ref(null);
 
@@ -35,6 +35,11 @@ const fetchItems = async () => {
         subcriteriaData.value = data.subcriteria;
         alternativesData.value = data.alternative;
         scoresData.value = data.score;
+
+        // Initialize selectedValues after data is loaded
+        criteriaData.value.forEach((criterion) => {
+            selectedValues.value[criterion.id] = '';
+        });
     } catch (error) {
         console.error('Error fetching items:', error);
     }
@@ -52,8 +57,8 @@ const filteredCriteria = computed(() => {
         (criterion) => criterion.name?.toLowerCase() !== 'harga',
     );
 });
+
 const saveValue = async () => {
-    // Ensure criteria are selected
     const activeCriteria = Object.keys(selectedValues.value).filter(
         (criterionId) => selectedValues.value[criterionId],
     );
@@ -71,26 +76,48 @@ const saveValue = async () => {
                     s.alternative_id === alternative.id &&
                     s.criteria_id === parseInt(criterionId, 10),
             );
-            return score && score.value === selectedValue;
+
+            if (!score) return false;
+
+            const criterion = criteriaData.value.find(
+                (c) => c.id === parseInt(criterionId, 10),
+            );
+
+            if (!criterion) return false;
+
+            // Handle comparison based on type
+            if (criterion.type === 'manual') {
+                // Ensure case-insensitive comparison and trim whitespace for manual criteria
+                return (
+                    score.value.toLowerCase().trim() ===
+                    selectedValue.toLowerCase().trim()
+                );
+            } else {
+                return score.value === selectedValue;
+            }
         });
     });
 
-    // Store all matching phones in an array
     recommendedPhone.value =
         filteredAlternatives.length > 0
             ? filteredAlternatives.map((alt) => alt.name)
             : ['Tidak ada smartphone yang cocok dengan kriteria Anda.'];
 
-    // Scroll to recommendation section
     if (recommendationSection.value) {
         recommendationSection.value.scrollIntoView({ behavior: 'smooth' });
     }
 };
 
 const clearSelection = () => {
-    Object.keys(selectedValues.value).forEach((key) => {
-        selectedValues.value[key] = ''; // Reset each dropdown to empty
+    // Create a new empty object to reset all values
+    const emptyValues = {};
+    criteriaData.value.forEach((criterion) => {
+        emptyValues[criterion.id] = '';
     });
+    selectedValues.value = emptyValues;
+
+    // Also clear recommendations
+    recommendedPhone.value = [];
 };
 </script>
 
@@ -133,15 +160,13 @@ const clearSelection = () => {
                     >
                         <div class="form-control">
                             <label class="label">
-                                <span class="label-text">{{ Harga }}</span>
+                                <span class="label-text">Harga</span>
                             </label>
                             <select
                                 v-model="selectedValues[1]"
                                 class="select select-bordered w-full"
                             >
-                                <option value="" disabled>
-                                    Select {{ Harga }}
-                                </option>
+                                <option value="" disabled>Select Harga</option>
                                 <option
                                     v-for="sub in getSubcriteria(1)"
                                     :key="sub.id"
@@ -164,21 +189,33 @@ const clearSelection = () => {
                                     criterion.name
                                 }}</span>
                             </label>
-                            <select
-                                v-model="selectedValues[criterion.id]"
-                                class="select select-bordered w-full"
-                            >
-                                <option value="" disabled>
-                                    Select {{ criterion.name }}
-                                </option>
-                                <option
-                                    v-for="sub in getSubcriteria(criterion.id)"
-                                    :key="sub.id"
-                                    :value="sub.value"
+                            <template v-if="criterion.type === 'manual'">
+                                <input
+                                    v-model="selectedValues[criterion.id]"
+                                    type="text"
+                                    class="input input-bordered w-full"
+                                    :placeholder="'Enter ' + criterion.name"
+                                />
+                            </template>
+                            <template v-else>
+                                <select
+                                    v-model="selectedValues[criterion.id]"
+                                    class="select select-bordered w-full"
                                 >
-                                    {{ sub.name }}
-                                </option>
-                            </select>
+                                    <option value="" disabled>
+                                        Select {{ criterion.name }}
+                                    </option>
+                                    <option
+                                        v-for="sub in getSubcriteria(
+                                            criterion.id,
+                                        )"
+                                        :key="sub.id"
+                                        :value="sub.value"
+                                    >
+                                        {{ sub.name }}
+                                    </option>
+                                </select>
+                            </template>
                         </div>
                     </div>
 
@@ -200,6 +237,7 @@ const clearSelection = () => {
                 <!-- Right: Search Results -->
                 <div
                     class="bg-base-100 w-full rounded-lg p-6 shadow-lg lg:w-1/2"
+                    ref="recommendationSection"
                 >
                     <h3 class="mb-4 text-xl font-bold">Hasil Pencarian</h3>
                     <ul v-if="recommendedPhone.length > 0">

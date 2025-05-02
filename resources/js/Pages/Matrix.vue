@@ -100,45 +100,69 @@ const fetchItems = async () => {
     <AuthenticatedLayout>
         <Head title="Preferensi" />
         <FlashMessage :show="showToast" :message="toastMessage" />
-        <div>
-            <table class="table-pin-cols table w-full">
-                <thead class="bg-base-300 text-center font-bold">
-                    <tr>
-                        <th class="text-center" style="width: 5%">
-                            Alternatif
-                        </th>
-                        <th class="text-center">Nama</th>
-                        <th
-                            v-for="criterion in criteriaData"
-                            :key="criterion.id"
-                            class="text-center"
-                        >
-                            {{ criterion.name }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr
-                        v-for="(item, index) in alternativeData"
-                        :key="item.id"
-                        class="hover bg-base-200"
+        <table class="table-pin-cols table w-full">
+            <thead class="bg-base-300 text-center font-bold">
+                <tr>
+                    <th class="text-center" style="width: 5%">Alternatif</th>
+                    <th class="text-center">Nama</th>
+                    <th
+                        v-for="criterion in criteriaData"
+                        :key="criterion.id"
+                        class="text-center"
                     >
-                        <td class="text-center">A{{ index + 1 }}</td>
-                        <td class="text-center">{{ item.name }}</td>
-                        <td
-                            v-for="criterion in criteriaData"
-                            :key="criterion.id"
-                            class="cursor-pointer text-center"
-                            @click="openModal(item, criterion)"
+                        {{ criterion.name }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    v-for="(item, index) in alternativeData"
+                    :key="item.id"
+                    class="hover bg-base-200"
+                >
+                    <td class="text-center">A{{ index + 1 }}</td>
+                    <td class="text-center">{{ item.name }}</td>
+                    <!-- <td
+                        v-for="criterion in criteriaData"
+                        :key="criterion.id"
+                        class="cursor-pointer text-center"
+                        @click="openModal(item, criterion)"
+                    >
+                        <div
+                            :class="{
+                                'text-red-500': !getValue(
+                                    item.id,
+                                    criterion.id,
+                                ),
+                            }"
                         >
-                            <div
-                                :class="{
-                                    'text-red-500': !getValue(
-                                        item.id,
-                                        criterion.id,
-                                    ),
-                                }"
-                            >
+                            {{
+                                getSubcriteria(criterion.id).find(
+                                    (sub) =>
+                                        sub.value ===
+                                        getValue(item.id, criterion.id),
+                                )?.name || 'pilih'
+                            }}
+                        </div>
+                    </td> -->
+                    <td
+                        v-for="criterion in criteriaData"
+                        :key="criterion.id"
+                        class="cursor-pointer text-center"
+                        @click="openModal(item, criterion)"
+                    >
+                        <div
+                            :class="{
+                                'text-red-500': !getValue(
+                                    item.id,
+                                    criterion.id,
+                                ),
+                            }"
+                        >
+                            <template v-if="criterion.type === 'manual'">
+                                {{ getValue(item.id, criterion.id) || 'pilih' }}
+                            </template>
+                            <template v-else>
                                 {{
                                     getSubcriteria(criterion.id).find(
                                         (sub) =>
@@ -146,69 +170,79 @@ const fetchItems = async () => {
                                             getValue(item.id, criterion.id),
                                     )?.name || 'pilih'
                                 }}
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            </template>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-            <table class="table-pin-cols table w-full">
-                <thead class="bg-base-300 text-center font-bold">
-                    <tr>
-                        <th class="text-center" style="width: 5%">
-                            Alternatif
-                        </th>
-                        <th
-                            v-for="(criterion, index) in criteriaData"
-                            :key="criterion.id"
-                            class="text-center"
-                        >
-                            C{{ index + 1 }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr
-                        v-for="(item, index) in alternativeData"
-                        :key="item.id"
-                        class="hover bg-base-200"
+        <!-- <table class="table-pin-cols table w-full">
+            <thead class="bg-base-300 text-center font-bold">
+                <tr>
+                    <th class="text-center" style="width: 5%">Alternatif</th>
+                    <th
+                        v-for="(criterion, index) in criteriaData"
+                        :key="criterion.id"
+                        class="text-center"
                     >
-                        <td class="text-center">A{{ index + 1 }}</td>
-                        <td
-                            v-for="criterion in criteriaData"
-                            :key="criterion.id"
-                            class="cursor-pointer text-center"
-                            @click="openModal(item, criterion)"
+                        C{{ index + 1 }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    v-for="(item, index) in alternativeData"
+                    :key="item.id"
+                    class="hover bg-base-200"
+                >
+                    <td class="text-center">A{{ index + 1 }}</td>
+                    <td
+                        v-for="criterion in criteriaData"
+                        :key="criterion.id"
+                        class="cursor-pointer text-center"
+                        @click="openModal(item, criterion)"
+                    >
+                        <div
+                            :class="{
+                                'text-red-500': !getValue(
+                                    item.id,
+                                    criterion.id,
+                                ),
+                            }"
                         >
-                            <div
-                                :class="{
-                                    'text-red-500': !getValue(
-                                        item.id,
-                                        criterion.id,
-                                    ),
-                                }"
-                            >
-                                {{
-                                    getSubcriteria(criterion.id).find(
-                                        (sub) =>
-                                            sub.value ===
-                                            getValue(item.id, criterion.id),
-                                    )?.value || '-'
-                                }}
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            {{
+                                getSubcriteria(criterion.id).find(
+                                    (sub) =>
+                                        sub.value ===
+                                        getValue(item.id, criterion.id),
+                                )?.value || '-'
+                            }}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table> -->
 
-            <!-- Modal -->
-            <dialog id="criterion_modal" class="modal">
-                <div class="modal-box">
-                    <h3 class="text-lg font-bold">
-                        Set {{ selectedCriterion?.name }} for
-                        {{ selectedAlternative?.name }}
-                    </h3>
-                    <div class="py-4">
+        <!-- Modal -->
+        <dialog id="criterion_modal" class="modal">
+            <div class="modal-box">
+                <h3 class="text-lg font-bold">
+                    Set {{ selectedCriterion?.name }} for
+                    {{ selectedAlternative?.name }}
+                </h3>
+                <div class="py-4">
+                    <template v-if="selectedCriterion?.type === 'manual'">
+                        <input
+                            type="number"
+                            :key="selectedCriterion?.id"
+                            :id="selectedCriterion?.id"
+                            v-model="selectedValue"
+                            class="input input-bordered w-full"
+                            placeholder="Enter value"
+                        />
+                    </template>
+                    <template v-else>
                         <select
                             v-model="selectedValue"
                             class="select select-bordered w-full"
@@ -224,18 +258,18 @@ const fetchItems = async () => {
                                 {{ sub.value }}
                             </option>
                         </select>
-                    </div>
-                    <div class="modal-action">
-                        <button class="btn" @click="closeModal">Cancel</button>
-                        <button class="btn btn-primary" @click="saveValue">
-                            Save
-                        </button>
-                    </div>
+                    </template>
                 </div>
-                <form method="dialog" class="modal-backdrop">
-                    <button>close</button>
-                </form>
-            </dialog>
-        </div>
+                <div class="modal-action">
+                    <button class="btn" @click="closeModal">Cancel</button>
+                    <button class="btn btn-primary" @click="saveValue">
+                        Save
+                    </button>
+                </div>
+            </div>
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
     </AuthenticatedLayout>
 </template>

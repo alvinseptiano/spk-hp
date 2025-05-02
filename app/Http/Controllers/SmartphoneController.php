@@ -39,7 +39,8 @@ class SmartphoneController extends Controller
             $rules = [
                 'name' => 'required|string|max:255',
                 'weight' => 'required|numeric|min:0|max:100',
-                'attribute' => 'required|string|max:100'
+                'attribute' => 'required|string|max:100',
+                'type' => 'required|string|max:100',
             ];
             $model = Criteria::class;
         } elseif ($type == 'subcriteria') {

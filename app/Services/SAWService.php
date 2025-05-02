@@ -92,9 +92,6 @@ class SawService
         }
     }
 
-    /**
-     * Calculate weighted scores
-     */
     public function calculateWeightedScores(array $normalization)
     {
         try {

@@ -5,13 +5,9 @@ namespace App\Services;
 use App\Models\Alternative;
 use App\Models\Criteria;
 use App\Models\Score;
-use Illuminate\Support\Facades\DB;
 
 class WPService
 {
-    /**
-     * Get decision matrix from scores table
-     */
     private function getDecisionMatrix()
     {
         try {
