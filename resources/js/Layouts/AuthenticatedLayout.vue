@@ -7,7 +7,6 @@ import {
     HomeIcon,
     UserIcon,
     TableCellsIcon,
-    DevicePhoneMobileIcon,
     DocumentChartBarIcon,
     ChartBarIcon,
 } from '@heroicons/vue/24/solid';
@@ -80,12 +79,12 @@ watch(isOpen, (newValue) => {
                                 :link="`preferensi`"
                                 :isOpen="isOpen"
                             />
-                            <MenuItem
+                            <!-- <MenuItem
                                 :icon="DevicePhoneMobileIcon"
                                 :name="`Rekomendasi`"
                                 :link="`rekomendasi`"
                                 :isOpen="isOpen"
-                            />
+                            /> -->
                             <div class="divider my-1 shrink-0"></div>
                             <MenuItem
                                 :icon="UserIcon"

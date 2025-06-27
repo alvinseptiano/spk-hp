@@ -10,8 +10,10 @@ import { Head } from '@inertiajs/vue3';
     <div class="hero bg-base-300 flex h-screen justify-center">
         <div class="hero-content text-center">
             <div class="max-w-md">
-                <h1 class="text-5xl font-bold">
-                    Sistem Pendukung Keputusan SAW Smartphone
+                <h1 class="text-3xl font-bold">
+                    Sistem pendukung keputusan pemilihan smartphone terbaik
+                    berbasis web menggunakan metode simple adsitive weighting
+                    (saw)
                 </h1>
                 <p class="py-6">
                     Didalam sistem ini digunakan algoritma SAW atau yang bisa

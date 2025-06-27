@@ -34,6 +34,7 @@ onMounted(() => {
 
         <!-- Tables -->
         <div v-else>
+            <h1 class="text-center text-3xl">Kriteria</h1>
             <div
                 class="flex overflow-auto"
                 v-if="tableData && tableData['matrix']"
@@ -64,6 +65,8 @@ onMounted(() => {
                     </tbody>
                 </table>
             </div>
+
+            <h1 class="text-center text-3xl">Pembobotan</h1>
 
             <div
                 class="flex overflow-auto"
@@ -96,6 +99,7 @@ onMounted(() => {
                 </table>
             </div>
 
+            <h1 class="text-center text-3xl">Normalisasi</h1>
             <div
                 class="flex overflow-auto"
                 v-if="tableData && tableData['normalization']"
@@ -127,6 +131,8 @@ onMounted(() => {
                 </table>
             </div>
 
+            <h1 class="text-center text-3xl">Ranking</h1>
+            <div class="border-separate"></div>
             <div
                 class="flex overflow-auto"
                 v-if="tableData && tableData['ranking']"
