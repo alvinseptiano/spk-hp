@@ -75,7 +75,7 @@ watch(isOpen, (newValue) => {
                             />
                             <MenuItem
                                 :icon="ChartBarIcon"
-                                :name="`Matriks`"
+                                :name="`Hasil Peniliaian`"
                                 :link="`preferensi`"
                                 :isOpen="isOpen"
                             />
