@@ -135,14 +135,6 @@ onMounted(() => {
         <div class="">
             <div role="tablist" class="tabs-box tabs">
                 <!-- Alternatif Section -->
-                <input
-                    type="radio"
-                    name="my_tabs_2"
-                    role="tab"
-                    class="tab"
-                    aria-label="Alternatif"
-                    checked="checked"
-                />
                 <div
                     role="tabpanel"
                     class="tab-content max-h-[80vh] overflow-y-auto p-4"
@@ -152,75 +144,63 @@ onMounted(() => {
                             <PlusCircleIcon class="size-5" />
                             Alternatif
                         </AccentButton>
-                        <div class="">
-                            <table class="table-pin-rows table-pin-cols table">
-                                <thead
-                                    class="bg-base-300 text-center font-bold"
-                                >
-                                    <tr>
-                                        <th
-                                            class="text-center"
-                                            style="width: 5%"
-                                        >
-                                            Alternatif
-                                        </th>
-                                        <th class="text-center">Nama</th>
+                        <table class="table-pin-rows table-pin-cols table">
+                            <thead class="bg-base-300 text-center font-bold">
+                                <tr>
+                                    <th class="text-center" style="width: 5%">
+                                        Alternatif
+                                    </th>
+                                    <th class="text-center">Nama</th>
 
-                                        <th
-                                            class="text-center"
-                                            style="width: 5%"
+                                    <th class="text-center" style="width: 5%">
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr
+                                    v-for="(item, index) in tableData[
+                                        'alternative'
+                                    ]"
+                                    :key="item.id"
+                                >
+                                    <td class="text-center">
+                                        A{{ index + 1 }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ item.name }}
+                                    </td>
+                                    <td class="flow-row flex">
+                                        <button
+                                            class="btn btn-ghost"
+                                            @click="
+                                                openModal(
+                                                    'alternative',
+                                                    'edit',
+                                                    item,
+                                                )
+                                            "
                                         >
-                                            Aksi
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-center">
-                                    <tr
-                                        v-for="(item, index) in tableData[
-                                            'alternative'
-                                        ]"
-                                        :key="item.id"
-                                    >
-                                        <td class="text-center">
-                                            A{{ index + 1 }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ item.name }}
-                                        </td>
-                                        <td class="flow-row flex">
-                                            <button
-                                                class="btn btn-ghost"
-                                                @click="
-                                                    openModal(
-                                                        'alternative',
-                                                        'edit',
-                                                        item,
-                                                    )
-                                                "
-                                            >
-                                                <PencilSquareIcon
-                                                    class="h-5 w-5"
-                                                />
-                                            </button>
-                                            <button
-                                                class="btn btn-ghost"
-                                                @click="
-                                                    handleDelete(
-                                                        'alternative',
-                                                        item.id,
-                                                        item.name,
-                                                    )
-                                                "
-                                            >
-                                                <TrashIcon
-                                                    class="text-error size-5"
-                                                />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                            <PencilSquareIcon class="h-5 w-5" />
+                                        </button>
+                                        <button
+                                            class="btn btn-ghost"
+                                            @click="
+                                                handleDelete(
+                                                    'alternative',
+                                                    item.id,
+                                                    item.name,
+                                                )
+                                            "
+                                        >
+                                            <TrashIcon
+                                                class="text-error size-5"
+                                            />
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 

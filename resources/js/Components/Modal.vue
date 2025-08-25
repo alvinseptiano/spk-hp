@@ -1,6 +1,5 @@
-<!-- Modal.vue -->
 <script setup>
-import { reactive, watch } from 'vue';
+import { reactive, watch, ref, onBeforeUnmount } from 'vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const props = defineProps({
@@ -25,11 +24,46 @@ const form = reactive({
     },
 });
 
+const modalBox = ref(null);
+let isDragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+const handleMouseDown = (e) => {
+    if (!modalBox.value) return;
+    isDragging = true;
+
+    // get initial offset
+    const rect = modalBox.value.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+};
+
+const handleMouseMove = (e) => {
+    if (!isDragging || !modalBox.value) return;
+    modalBox.value.style.left = e.clientX - offsetX + 'px';
+    modalBox.value.style.top = e.clientY - offsetY + 'px';
+};
+
+const handleMouseUp = () => {
+    isDragging = false;
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+};
+
+// Cleanup on unmount
+onBeforeUnmount(() => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+});
+
 const handleSubmit = () => {
     emit('submit', {
         ...form,
         type: form.type,
-        // id: props.editData?.id, // Include ID if editing
     });
     emit('update:modelValue', false);
 };
@@ -64,15 +98,25 @@ watch(
         :open="modelValue"
         @close="$emit('update:modelValue', false)"
     >
-        <div class="modal-box relative max-w-64">
-            <h3 class="text-lg font-bold">{{ title }}</h3>
-            <button
-                class="btn btn-circle btn-ghost btn-sm absolute top-2 right-2"
-                type="button"
-                @click="$emit('update:modelValue', false)"
+        <div
+            ref="modalBox"
+            class="modal-box relative max-w-64"
+            style="position: absolute"
+        >
+            <!-- Drag handle -->
+            <div
+                class="flex cursor-move items-center justify-between select-none"
+                @mousedown="handleMouseDown"
             >
-                ✕
-            </button>
+                <h3 class="text-lg font-bold">{{ title }}</h3>
+                <button
+                    class="btn btn-circle btn-ghost btn-sm"
+                    type="button"
+                    @click="$emit('update:modelValue', false)"
+                >
+                    ✕
+                </button>
+            </div>
 
             <form @submit.prevent="handleSubmit" class="mt-4 space-y-4">
                 <!-- Name field - always shown -->

@@ -45,9 +45,7 @@ watch(isOpen, (newValue) => {
                             'text-xl font-bold transition-opacity',
                             isOpen ? 'opacity-100' : 'hidden opacity-0',
                         ]"
-                    >
-                        Dashboard
-                    </h2>
+                    ></h2>
                 </div>
 
                 <!-- Center section with navigation -->
@@ -63,8 +61,20 @@ watch(isOpen, (newValue) => {
                             />
                             <MenuItem
                                 :icon="DocumentChartBarIcon"
-                                :name="`Input Data`"
-                                :link="`inputdata`"
+                                :name="`Alternatif`"
+                                :link="`alternatif`"
+                                :isOpen="isOpen"
+                            />
+                            <MenuItem
+                                :icon="DocumentChartBarIcon"
+                                :name="`Kriteria`"
+                                :link="`kriteria`"
+                                :isOpen="isOpen"
+                            />
+                            <MenuItem
+                                :icon="DocumentChartBarIcon"
+                                :name="`Sub Kriteria`"
+                                :link="`subkriteria`"
                                 :isOpen="isOpen"
                             />
                             <MenuItem
@@ -79,12 +89,6 @@ watch(isOpen, (newValue) => {
                                 :link="`preferensi`"
                                 :isOpen="isOpen"
                             />
-                            <!-- <MenuItem
-                                :icon="DevicePhoneMobileIcon"
-                                :name="`Rekomendasi`"
-                                :link="`rekomendasi`"
-                                :isOpen="isOpen"
-                            /> -->
                             <div class="divider my-1 shrink-0"></div>
                             <MenuItem
                                 :icon="UserIcon"

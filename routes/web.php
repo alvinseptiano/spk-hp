@@ -8,27 +8,40 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SmartphoneController;
 
-Route::get('/rekomendasi', function () {
-    return Inertia::render('Rekomendasi');
-})->name('rekomendasi');
-
-Route::get('/', function () {
-    return Inertia::render('Home');
-})->name('homepage');
-
-Route::get('/home', function () {
-    return Inertia::render('Home');
-})->name('homepage');
-
-Route::get('/getdata', [SmartphoneController::class, 'show']);
-
+    
 Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Home');
+    })->name('homepage');
+
+    Route::get('/home', function () {
+        return Inertia::render('Home');
+    })->name('homepage');
+
+    Route::get('/rekomendasi', function () {
+        return Inertia::render('Rekomendasi');
+    })->name('rekomendasi');
+
+    Route::get('/getdata', [SmartphoneController::class, 'show']);
+
     Route::get('/dashboard', function () {
         return Inertia::render('Home');
     })->name('dashboard');
 
     Route::get('/inputdata', function () {
         return Inertia::render('DataForm');
+    })->name('inputdata');
+
+    Route::get('/alternatif', function () {
+        return Inertia::render('Alternative');
+    })->name('inputdata');
+
+    Route::get('/kriteria', function () {
+        return Inertia::render('Criteria');
+    })->name('inputdata');
+
+    Route::get('/subkriteria', function () {
+        return Inertia::render('SubCriteria');
     })->name('inputdata');
 
     Route::get('/matrix', function () {
