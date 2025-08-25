@@ -69,14 +69,6 @@ onMounted(() => {
 
         <div class="navbar-end">
             <div class="dropdown dropdown-end">
-                <!-- <div
-                    v-if="user.name"
-                    tabindex="0"
-                    role="button"
-                    class="btn rounded-btn"
-                >
-                    {{ user.name }}
-                </div> -->
                 <ul
                     tabindex="0"
                     class="menu dropdown-content rounded-box bg-base-100 z-[1] mt-4 w-52 p-2"
@@ -105,11 +97,8 @@ onMounted(() => {
     </div>
     <dialog id="about_modal" class="modal">
         <div class="modal-box">
-            <h3 class="text-lg font-bold">About Encrypt It</h3>
-            <p class="py-4">
-                This is a simple web application that helps you encrypt and
-                decrypt text using various encryption methods.
-            </p>
+            <h3 class="text-lg font-bold">About:</h3>
+            <p class="py-4">Sistem Pendukung Keputusan Pemilihan Smartphone</p>
             <div class="modal-action">
                 <form method="dialog">
                     <button class="btn">Close</button>
