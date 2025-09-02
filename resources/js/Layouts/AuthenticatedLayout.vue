@@ -3,6 +3,8 @@ import TopBar from '@/Components/TopBar.vue';
 import { ref, watch } from 'vue';
 import SideBarIcon from '@/Components/SideBarIcon.vue';
 import MenuItem from '@/Components/MenuItem.vue';
+import { router, usePage } from '@inertiajs/vue3';
+
 import {
     HomeIcon,
     UserIcon,
@@ -11,7 +13,15 @@ import {
     ChartBarIcon,
 } from '@heroicons/vue/24/solid';
 
+const page = usePage();
 const isOpen = ref(localStorage.getItem('sidebarOpen') === 'true' || false);
+
+const logout = () => {
+    console.log('logout');
+    router.post('/logout', {
+        _token: page.props.csrf_token,
+    });
+};
 
 watch(isOpen, (newValue) => {
     localStorage.setItem('sidebarOpen', newValue);
@@ -96,6 +106,9 @@ watch(isOpen, (newValue) => {
                                 :link="`profile`"
                                 :isOpen="isOpen"
                             />
+                            <button @click="logout" class="btn btn-error my-5">
+                                Logout
+                            </button>
                         </ul>
                     </nav>
                 </div>
