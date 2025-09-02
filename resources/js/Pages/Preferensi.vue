@@ -34,7 +34,7 @@ onMounted(() => {
 
         <!-- Tables -->
         <div v-else>
-            <h1 class="text-center text-3xl">Kriteria</h1>
+            <h1 class="text-center text-3xl">Hasil Kriteria</h1>
             <div
                 class="flex overflow-auto"
                 v-if="tableData && tableData['matrix']"
@@ -66,7 +66,7 @@ onMounted(() => {
                 </table>
             </div>
 
-            <h1 class="text-center text-3xl">Pembobotan</h1>
+            <h1 class="text-center text-3xl">Hasil Pembobotan</h1>
 
             <div
                 class="flex overflow-auto"
@@ -75,7 +75,7 @@ onMounted(() => {
                 <table class="table-pin-cols table">
                     <thead class="bg-base-300 text-center text-lg font-bold">
                         <tr>
-                            <th style="width: 25%">Alternatif</th>
+                            <th style="width: 25%">Hasil Alternatif</th>
                             <th
                                 v-for="(value, key) in tableData['matrix'][1]"
                                 :key="key"
@@ -99,7 +99,7 @@ onMounted(() => {
                 </table>
             </div>
 
-            <h1 class="text-center text-3xl">Normalisasi</h1>
+            <h1 class="text-center text-3xl">Hasil Normalisasi</h1>
             <div
                 class="flex overflow-auto"
                 v-if="tableData && tableData['normalization']"
@@ -131,7 +131,7 @@ onMounted(() => {
                 </table>
             </div>
 
-            <h1 class="text-center text-3xl">Ranking</h1>
+            <h1 class="text-center text-3xl">Hasil Ranking</h1>
             <div class="border-separate"></div>
             <div
                 class="flex overflow-auto"
