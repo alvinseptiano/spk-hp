@@ -11,6 +11,7 @@ import {
     TableCellsIcon,
     DocumentChartBarIcon,
     ChartBarIcon,
+    ArrowRightStartOnRectangleIcon,
 } from '@heroicons/vue/24/solid';
 
 const page = usePage();
@@ -107,6 +108,9 @@ watch(isOpen, (newValue) => {
                                 :isOpen="isOpen"
                             />
                             <button @click="logout" class="btn btn-error my-5">
+                                <ArrowRightStartOnRectangleIcon
+                                    class="size-5"
+                                />
                                 Logout
                             </button>
                         </ul>

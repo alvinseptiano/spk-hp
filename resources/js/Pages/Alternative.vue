@@ -2,11 +2,7 @@
 import { Head, router, usePage } from '@inertiajs/vue3';
 import { ref, watch, nextTick, onMounted } from 'vue';
 import Modal from '@/Components/Modal.vue';
-import {
-    PencilSquareIcon,
-    TrashIcon,
-    PlusCircleIcon,
-} from '@heroicons/vue/24/solid';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/solid';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import AccentButton from '@/Components/AccentButton.vue';
 import FlashMessage from '@/Components/FlashMessage.vue';
@@ -130,8 +126,7 @@ onMounted(() => {
                     <AccentButton
                         @click="openModal('alternative', 'add', null)"
                     >
-                        <PlusCircleIcon class="size-5" />
-                        Alternatif
+                        Add Alternatif
                     </AccentButton>
                     <table class="table-pin-rows table-pin-cols table w-full">
                         <thead class="bg-base-300 text-center font-bold">
