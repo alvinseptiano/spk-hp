@@ -144,7 +144,7 @@ onMounted(() => {
                                         @click="
                                             openModal(
                                                 'subcriteria',
-                                                'edit',
+                                                'add',
                                                 item,
                                                 item.id,
                                             )
