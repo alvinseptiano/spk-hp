@@ -103,7 +103,7 @@ watch(isOpen, (newValue) => {
                             <div class="divider my-1 shrink-0"></div>
                             <MenuItem
                                 :icon="UserIcon"
-                                :name="`Akun`"
+                                :name="$page.props.auth.user.name"
                                 :link="`profile`"
                                 :isOpen="isOpen"
                             />
