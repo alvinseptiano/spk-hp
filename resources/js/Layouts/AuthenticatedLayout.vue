@@ -107,11 +107,14 @@ watch(isOpen, (newValue) => {
                                 :link="`profile`"
                                 :isOpen="isOpen"
                             />
-                            <button @click="logout" class="btn btn-error my-5">
+                            <button
+                                @click="logout"
+                                class="btn btn-error my-5 flex items-center gap-2"
+                            >
                                 <ArrowRightStartOnRectangleIcon
                                     class="size-5"
                                 />
-                                Logout
+                                <span v-if="isOpen">Logout</span>
                             </button>
                         </ul>
                     </nav>
